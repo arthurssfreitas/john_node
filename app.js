@@ -8,6 +8,7 @@ const app = express();
 const {getHomePage} = require('./routes/index');
 const {addPlayerPage, addPlayer, deletePlayer, editPlayer, editPlayerPage} = require('./routes/player');
 const {productPage, addProduct} = require('./routes/product.js');
+const {getDashboard} = require('./routes/dashboard');
 const port = 3000;
 
 // create connection to database
@@ -47,6 +48,7 @@ app.post('/add', addPlayer);
 app.post('/edit/:id', editPlayer);
 app.get('/product', productPage);
 app.get('/product/add', addProduct);
+app.get('/painel', getDashboard);
 
 
 // set the app to listen on the port
