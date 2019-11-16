@@ -6,10 +6,10 @@ const mysql = require('mysql');
 const path = require('path');
 const app = express();
 
-const {getHomePage, getLoginPage,login} = require('./routes/index');
+const {getLoginPage} = require('./routes/index');
 const {addPlayerPage, addPlayer, deletePlayer, editPlayer, editPlayerPage} = require('./routes/player');
-const {productPage, addProduct} = require('./routes/product.js');
-const {getDashboard} = require('./routes/dashboard');
+const {getDashboard,login, logout} = require('./routes/dashboard');
+const {getAllUsers,getTables} = require('./routes/user');
 const port = 3000;
 
 // create connection to database
@@ -49,17 +49,18 @@ app.use(fileUpload()); // configure fileupload
 
 // routes for the app
 
-app.get('/', getHomePage);
+app.get('/', getLoginPage);
+app.get('/login', getDashboard);
 app.get('/add', addPlayerPage);
 app.get('/edit/:id', editPlayerPage);
 app.get('/delete/:id', deletePlayer);
 app.post('/add', addPlayer);
 app.post('/edit/:id', editPlayer);
-app.get('/product', productPage);
-app.get('/product/add', addProduct);
 app.get('/painel', getDashboard);
-app.get('/login', getLoginPage);
 app.post('/auth', login);
+app.get('/logout', logout);
+app.get('/usuario', getAllUsers);
+app.get('/tables', getTables);
 
 
 // set the app to listen on the port
