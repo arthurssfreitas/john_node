@@ -24,9 +24,11 @@
   <title>
     Material Dashboard by Creative Tim
   </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
@@ -38,15 +40,15 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
-    <%- include('navbars/sidebar.ejs'); %>
+         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+ 
+         Tip 2: you can also add an image using data-image tag
+     -->
+      <%- include('../navbars/sidebar.ejs'); %>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <%- include('navbars/navbar.ejs'); %>
+      <%- include('../navbars/navbar.ejs'); %>
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
@@ -54,67 +56,57 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Usuários cadastrados</h4>
-                  <p class="card-category">Listagem de todos os usuários</p>
+                  <h4 class="card-title ">Criar novo usuário</h4>
+                  <p class="card-category">Preencha os dados corretamente</p>
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
-                      <div class="col-md-12 text-right">
-                          <a href="/usuario/novo" class="btn btn-sm btn-primary">Novo usuário</a>
+                    <div class="col-md-12 text-right">
+                        <a href="/usuario" class="btn btn-sm btn-primary">Voltar</a>
+                      </div>
+                      <% if(typeof newUser != 'undefined' ) { %>
+                      <div class="alert alert-success" role="alert">
+                        <%= newUser %>
                         </div>
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>
-                          ID
-                        </th>
-                        <th>
-                          Login
-                        </th>
-                        <th>
-                          Email
-                        </th>
-                        <th class="th-actions text-right">
-                            Ações
-                        </th>
-                      </thead>
-                      <tbody>
-                          <% users.forEach(function(user) { %>
-                        <tr>
-                          <td>
-                            <%= user.id %>
-                          </td>
-                          <td>
-                          <%= user.username %>
-                          </td>
-                          <td>
-                        <%= user.email %>
-                          </td>
-                          <td class="td-actions text-right">
-                              <a href="#editar" class="btn btn-success btn-link"><i class="material-icons">edit</i></a>
-                              <a href="#deletar" class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
-                          </td>
-                        </tr>
-                        <% }); %>
-                      </tbody>
-                    </table>
-                      <nav aria-label="Page navigation example">
-                      <ul class="pagination justify-content-center">
-                        <li class="page-item <%= offset == 0 ?'disabled':'' %>">
-                          <a class="page-link" href="/usuario?pagina=<%= pagina - 1 %>" tabindex="-1">Anterior</a>
-                        </li>
-                        <li class="page-item <%= offset > limit ?'disabled':'' %>">
-                          <a class="page-link" href="/usuario?pagina=<%= pagina + 1 %>">Próximo</a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
+                        <% } %>
+                  <form method="POST">
+                    <div class="row">
+                      <label class="col-sm-2 col-form-label">Login</label>
+                      <div class="col-sm-7">
+                        <div class="form-group bmd-form-group">
+                          <input class="form-control" name="login" id="login" type="text" placeholder="Login"
+                            value="" required="true" aria-required="true">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-2 col-form-label">Senha</label>
+                      <div class="col-sm-7">
+                        <div class="form-group bmd-form-group">
+                          <input class="form-control" name="senha" id="senha" type="password" placeholder="Senha"
+                            value="" required="true" aria-required="true">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-2 col-form-label">Email</label>
+                      <div class="col-sm-7">
+                        <div class="form-group bmd-form-group">
+                          <input class="form-control" name="email" id="email" type="email" placeholder="Email"
+                            value="" required="true" aria-required="true">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer ml-auto mr-auto">
+                        <button type="submit" class="btn btn-primary">Criar usuário</button>
+                      </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <%- include('navbars/footer.ejs'); %>
+      <%- include('../navbars/footer.ejs'); %>
     </div>
   </div>
   <!--   Core JS Files   -->

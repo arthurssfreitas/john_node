@@ -4,12 +4,14 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const mysql = require('mysql');
 const path = require('path');
+const flash = require('req-flash');
 const app = express();
+
 
 const {getLoginPage} = require('./routes/index');
 const {addPlayerPage, addPlayer, deletePlayer, editPlayer, editPlayerPage} = require('./routes/player');
 const {getDashboard,login, logout} = require('./routes/dashboard');
-const {getAllUsers,getTables} = require('./routes/user');
+const {getAllUsers,createUser,getPageCreateUser} = require('./routes/user');
 const port = 3000;
 
 // create connection to database
@@ -31,11 +33,13 @@ db.connect((err) => {
 global.db = db;
 
 
+
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }));
+app.use(flash());
 
 
 // configure middleware
@@ -59,8 +63,9 @@ app.post('/edit/:id', editPlayer);
 app.get('/painel', getDashboard);
 app.post('/auth', login);
 app.get('/logout', logout);
-// app.get('/usuario', getAllUsers);
-app.get('/tables', getTables);
+app.get('/usuario', getAllUsers);
+app.get('/usuario/novo', getPageCreateUser);
+app.post('/usuario/novo', createUser);
 
 
 // set the app to listen on the port
