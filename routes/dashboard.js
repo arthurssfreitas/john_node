@@ -3,7 +3,8 @@ module.exports = {
         if(req.session.loggedin){
             res.render('admin/dashboard.ejs',{
                 title: "Painel de controle | John of the fish",
-                activePage: "painel"
+                activePage: "painel",
+                pageName: "Painel de controle"
                 }); 
             
         }else{

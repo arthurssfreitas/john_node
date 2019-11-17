@@ -59,7 +59,7 @@ app.post('/edit/:id', editPlayer);
 app.get('/painel', getDashboard);
 app.post('/auth', login);
 app.get('/logout', logout);
-app.get('/usuario', getAllUsers);
+// app.get('/usuario', getAllUsers);
 app.get('/tables', getTables);
 
 
