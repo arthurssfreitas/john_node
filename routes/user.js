@@ -18,12 +18,11 @@ module.exports = {
                         throw err;
                     }
                 }); 
-
             }else{
                 res.send('faça login para ver a página');
             }
         },
-        getPageCreateUser: async (req,res)=>{
+        createUserPage: async (req,res)=>{
             if(req.session.loggedin){
                 res.render('admin/user/createuser',{
                     activePage: "users",
@@ -49,6 +48,47 @@ module.exports = {
                     }
                 )
             }
-        }
+        },
+        editUserPage: (req, res)=>{
+            if(req.session.loggedin){
+            let id = req.params.id;
+            let query = db.query('SELECT * FROM accounts WHERE id = ?',[id],
+            function(err, result){
+                if (err) {
+                    throw err;
+                }
+                    res.render('admin/user/edituser',{
+                            activePage: "users",
+                            pageName: "Editar Usuário",
+                            users: result[0]
+                    });
+                });
+        }},
+        editUser: async (req, res) =>{
+            if(req.session.loggedin){
+                let id = req.params.id;
+                let name = req.body.login;
+                let password = req.body.senha;
+                let email = req.body.email;
 
-}
+                let query = db.query('UPDATE accounts SET username = ?, password = ?, email = ? WHERE id = ?',[name,password,email,id],
+                    function(err,result){
+                        if(err){
+                            throw err;
+                        }
+                        res.redirect('/usuario');
+                    });
+            }},
+            deleteUser: (req, res)=>{
+                if(req.session.loggedin){
+                let id = req.params.id;
+
+                let query = db.query('DELETE FROM accounts WHERE id = ?',[id],
+                    function(err, result){
+                    if (err) {
+                        throw err;
+                    }   
+                        res.redirect('/usuario');
+                    });
+            }}
+    }

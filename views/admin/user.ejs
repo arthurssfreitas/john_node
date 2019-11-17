@@ -90,8 +90,8 @@
                         <%= user.email %>
                           </td>
                           <td class="td-actions text-right">
-                              <a href="#editar" class="btn btn-success btn-link"><i class="material-icons">edit</i></a>
-                              <a href="#deletar" class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
+                              <a href="/editar/<%= user.id %>" class="btn btn-success btn-link"><i class="material-icons">edit</i></a>
+                              <a href="/deletar/<%= user.id %>" class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
                           </td>
                         </tr>
                         <% }); %>

@@ -11,7 +11,7 @@ const app = express();
 const {getLoginPage} = require('./routes/index');
 const {addPlayerPage, addPlayer, deletePlayer, editPlayer, editPlayerPage} = require('./routes/player');
 const {getDashboard,login, logout} = require('./routes/dashboard');
-const {getAllUsers,createUser,getPageCreateUser} = require('./routes/user');
+const {getAllUsers,createUser,createUserPage,editUser,editUserPage,deleteUser} = require('./routes/user');
 const port = 3000;
 
 // create connection to database
@@ -64,8 +64,11 @@ app.get('/painel', getDashboard);
 app.post('/auth', login);
 app.get('/logout', logout);
 app.get('/usuario', getAllUsers);
-app.get('/usuario/novo', getPageCreateUser);
+app.get('/usuario/novo', createUserPage);
 app.post('/usuario/novo', createUser);
+app.get('/editar/:id', editUserPage);
+app.post('/editar/:id', editUser);
+app.get('/deletar/:id', deleteUser);
 
 
 // set the app to listen on the port
