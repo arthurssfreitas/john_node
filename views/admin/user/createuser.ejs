@@ -60,21 +60,26 @@
                   <p class="card-category">Preencha os dados corretamente</p>
                 </div>
                 <div class="card-body">
-                    <div class="col-md-12 text-right">
-                        <a href="/usuario" class="btn btn-sm btn-primary">Voltar</a>
-                      </div>
-                      <% if(typeof newUser != 'undefined' ) { %>
-                      <div class="alert alert-success" role="alert">
-                        <%= newUser %>
-                        </div>
-                        <% } %>
+                  <div class="col-md-12 text-right">
+                    <a href="/usuario" class="btn btn-sm btn-primary">Voltar</a>
+                  </div>
+                  <% if(typeof newUser != 'undefined' ) { %>
+                  <div class="alert alert-success" role="alert">
+                    <%= newUser %>
+                  </div>
+                  <% } %>
+                  <% if(typeof errorPass != 'undefined' ) { %>
+                  <div class="alert alert-danger" role="alert">
+                    <%= errorPass %>
+                  </div>
+                  <% } %>
                   <form method="POST">
                     <div class="row">
                       <label class="col-sm-2 col-form-label">Login</label>
                       <div class="col-sm-7">
                         <div class="form-group bmd-form-group">
-                          <input class="form-control" name="login" id="login" type="text" placeholder="Login"
-                            value="" required="true" aria-required="true">
+                          <input class="form-control" name="login" id="login" type="text" placeholder="Login" value=""
+                            required="true" aria-required="true">
                         </div>
                       </div>
                     </div>
@@ -88,17 +93,26 @@
                       </div>
                     </div>
                     <div class="row">
+                      <label class="col-sm-2 col-form-label">Confirmar Senha</label>
+                      <div class="col-sm-7">
+                        <div class="form-group bmd-form-group">
+                          <input class="form-control" name="confirmar_senha" id="confirmar_senha" type="password"
+                            placeholder="Confirmação de Senha" value="" required="true" aria-required="true">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
                       <label class="col-sm-2 col-form-label">Email</label>
                       <div class="col-sm-7">
                         <div class="form-group bmd-form-group">
-                          <input class="form-control" name="email" id="email" type="email" placeholder="Email"
-                            value="" required="true" aria-required="true">
+                          <input class="form-control" name="email" id="email" type="email" placeholder="Email" value=""
+                            required="true" aria-required="true">
                         </div>
                       </div>
                     </div>
                     <div class="card-footer ml-auto mr-auto">
-                        <button type="submit" class="btn btn-primary">Criar usuário</button>
-                      </div>
+                      <button type="submit" class="btn btn-primary">Criar usuário</button>
+                    </div>
                   </form>
                 </div>
               </div>

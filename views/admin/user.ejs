@@ -24,9 +24,11 @@
   <title>
     Material Dashboard by Creative Tim
   </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
   <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
@@ -42,7 +44,7 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-    <%- include('navbars/sidebar.ejs'); %>
+      <%- include('navbars/sidebar.ejs'); %>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
@@ -58,31 +60,32 @@
                   <p class="card-category">Listagem de todos os usuários</p>
                 </div>
                 <!-- button to trigger the action -->
-<button class="btn btn-default" onclick="showNotification('top','right')">Top Right Notification</button>
+                <button class="btn btn-default" onclick="showNotification('top','right')">Top Right
+                  Notification</button>
 
-<!-- javascript -->
-<script>
-function showNotification(from, align){
+                <!-- javascript -->
+                <script>
+                  function showNotification(from, align) {
 
-$.notify({
-icon: "add_alert",
-message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful dashboard for every web developer."
+                    $.notify({
+                      icon: "add_alert",
+                      message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful dashboard for every web developer."
 
-},{
-type: 'success',
-timer: 4000,
-placement: {
-from: from,
-align: align
-}
-});
-}
-</script>
+                    }, {
+                      type: 'success',
+                      timer: 4000,
+                      placement: {
+                        from: from,
+                        align: align
+                      }
+                    });
+                  }
+                </script>
                 <div class="card-body">
                   <div class="table-responsive">
-                      <div class="col-md-12 text-right">
-                          <a href="/usuario/novo" class="btn btn-sm btn-primary">Novo usuário</a>
-                        </div>
+                    <div class="col-md-12 text-right">
+                      <a href="/usuario/novo" class="btn btn-sm btn-primary">Novo usuário</a>
+                    </div>
                     <table class="table">
                       <thead class=" text-primary">
                         <th>
@@ -95,35 +98,38 @@ align: align
                           Email
                         </th>
                         <th class="th-actions text-right">
-                            Ações
+                          Ações
                         </th>
                       </thead>
                       <tbody>
-                          <% users.forEach(function(user) { %>
+                        <% users.forEach(function(user) { %>
                         <tr>
                           <td>
                             <%= user.id %>
                           </td>
                           <td>
-                          <%= user.username %>
+                            <%= user.username %>
                           </td>
                           <td>
-                        <%= user.email %>
+                            <%= user.email %>
                           </td>
                           <td class="td-actions text-right">
-                              <a href="/editar/<%= user.id %>" class="btn btn-success btn-link"><i class="material-icons">edit</i></a>
-                              <a href="/deletar/<%= user.id %>" onclick="confirm('Deseja realmente excluir o usuário?') ? this.parentElement.submit() : ''" class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
+                            <a href="/editar/<%= user.id %>" class="btn btn-success btn-link"><i
+                                class="material-icons">edit</i></a>
+                            <a href="/deletar/<%= user.id %>"
+                              onclick="confirm('Deseja realmente excluir o usuário?') ? this.parentElement.submit() : ''"
+                              class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
                           </td>
                         </tr>
                         <% }); %>
                       </tbody>
                     </table>
-                      <nav aria-label="Page navigation example">
+                    <nav aria-label="Page navigation example">
                       <ul class="pagination justify-content-center">
                         <li class="page-item <%= offset == 0 ?'disabled':'' %>">
-                          <a class="page-link" href="/usuario?pagina=<%= pagina - 1 %>" tabindex="-1">Anterior</a>
+                          <a class="page-link" href="/usuario?pagina=<%= pagina - 1 %>">Anterior</a>
                         </li>
-                        <li class="page-item <%= offset > limit ?'disabled':'' %>">
+                        <li class="page-item <%= JSON.stringify(users.length) < limit ?'disabled':'' %>">
                           <a class="page-link" href="/usuario?pagina=<%= pagina + 1 %>">Próximo</a>
                         </li>
                       </ul>

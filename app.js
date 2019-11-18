@@ -5,18 +5,38 @@ const session = require('express-session');
 const mysql = require('mysql');
 const path = require('path');
 const flash = require('req-flash');
+const md5 = require('md5');
 const app = express();
 
 
-const {getLoginPage} = require('./routes/index');
-const {addPlayerPage, addPlayer, deletePlayer, editPlayer, editPlayerPage} = require('./routes/player');
-const {getDashboard,login, logout} = require('./routes/dashboard');
-const {getAllUsers,createUser,createUserPage,editUser,editUserPage,deleteUser} = require('./routes/user');
+const {
+    getLoginPage
+} = require('./routes/index');
+const {
+    addPlayerPage,
+    addPlayer,
+    deletePlayer,
+    editPlayer,
+    editPlayerPage
+} = require('./routes/player');
+const {
+    getDashboard,
+    login,
+    logout
+} = require('./routes/dashboard');
+const {
+    getAllUsers,
+    createUser,
+    createUserPage,
+    editUser,
+    editUserPage,
+    deleteUser
+} = require('./routes/user');
 const port = 3000;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
-const db = mysql.createConnection ({
+const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
@@ -31,13 +51,14 @@ db.connect((err) => {
     console.log('Connected to database');
 });
 global.db = db;
+global.md5 = md5;
 
 
 
 app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
 }));
 app.use(flash());
 
@@ -46,7 +67,9 @@ app.use(flash());
 app.set('port', process.env.port || port); // set express to use this port
 app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
 app.set('view engine', 'ejs'); // configure template engine
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json()); // parse form data client
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 app.use(fileUpload()); // configure fileupload
