@@ -49,7 +49,7 @@ module.exports = {
                 )
             }
         },
-        editUserPage: (req, res)=>{
+        editUserPage: async (req, res)=>{
             if(req.session.loggedin){
             let id = req.params.id;
             let query = db.query('SELECT * FROM accounts WHERE id = ?',[id],
@@ -79,12 +79,12 @@ module.exports = {
                         res.redirect('/usuario');
                     });
             }},
-            deleteUser: (req, res)=>{
+            deleteUser: async (req, res)=>{
                 if(req.session.loggedin){
                 let id = req.params.id;
-
                 let query = db.query('DELETE FROM accounts WHERE id = ?',[id],
                     function(err, result){
+
                     if (err) {
                         throw err;
                     }   

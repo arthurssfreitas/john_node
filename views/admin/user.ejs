@@ -57,6 +57,27 @@
                   <h4 class="card-title ">Usuários cadastrados</h4>
                   <p class="card-category">Listagem de todos os usuários</p>
                 </div>
+                <!-- button to trigger the action -->
+<button class="btn btn-default" onclick="showNotification('top','right')">Top Right Notification</button>
+
+<!-- javascript -->
+<script>
+function showNotification(from, align){
+
+$.notify({
+icon: "add_alert",
+message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful dashboard for every web developer."
+
+},{
+type: 'success',
+timer: 4000,
+placement: {
+from: from,
+align: align
+}
+});
+}
+</script>
                 <div class="card-body">
                   <div class="table-responsive">
                       <div class="col-md-12 text-right">
@@ -91,7 +112,7 @@
                           </td>
                           <td class="td-actions text-right">
                               <a href="/editar/<%= user.id %>" class="btn btn-success btn-link"><i class="material-icons">edit</i></a>
-                              <a href="/deletar/<%= user.id %>" class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
+                              <a href="/deletar/<%= user.id %>" onclick="confirm('Deseja realmente excluir o usuário?') ? this.parentElement.submit() : ''" class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
                           </td>
                         </tr>
                         <% }); %>
