@@ -35,17 +35,17 @@
 	</head>
 	<body>
 		<div class="login-form">
-			<% if(!session.username) { %>
+			<% if(!session.login) { %>
 			<h1>Acessar o sistema</h1>
 			<form action="auth" method="POST">
-				<input type="text" name="username" placeholder="Login" required>
-				<input type="password" name="password" placeholder="Senha" required>
+				<input type="text" name="login" placeholder="Login" required>
+				<input type="password" name="senha" placeholder="Senha" required>
 				<input type="submit" value="Entrar">
 			</form>
 			<% }else{ %>
 				<form action="#">
-						<input disabled type="text" name="username" placeholder="Login" required>
-						<input disabled type="password" name="password" placeholder="Senha" required>
+						<input disabled type="text" name="login" placeholder="Login" required>
+						<input disabled type="password" name="senha" placeholder="Senha" required>
 						<input disabled type="submit" value="Entrar">
 					</form>
 			<% } %>	

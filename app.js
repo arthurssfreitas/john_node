@@ -13,13 +13,6 @@ const {
     getLoginPage
 } = require('./routes/index');
 const {
-    addPlayerPage,
-    addPlayer,
-    deletePlayer,
-    editPlayer,
-    editPlayerPage
-} = require('./routes/player');
-const {
     getDashboard,
     login,
     logout
@@ -77,12 +70,6 @@ app.use(fileUpload()); // configure fileupload
 // routes for the app
 
 app.get('/', getLoginPage);
-app.get('/login', getDashboard);
-app.get('/add', addPlayerPage);
-app.get('/edit/:id', editPlayerPage);
-app.get('/delete/:id', deletePlayer);
-app.post('/add', addPlayer);
-app.post('/edit/:id', editPlayer);
 app.get('/painel', getDashboard);
 app.post('/auth', login);
 app.get('/logout', logout);

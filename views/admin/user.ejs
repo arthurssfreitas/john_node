@@ -59,30 +59,13 @@
                   <h4 class="card-title ">Usuários cadastrados</h4>
                   <p class="card-category">Listagem de todos os usuários</p>
                 </div>
-                <!-- button to trigger the action -->
-                <button class="btn btn-default" onclick="showNotification('top','right')">Top Right
-                  Notification</button>
-
-                <!-- javascript -->
-                <script>
-                  function showNotification(from, align) {
-
-                    $.notify({
-                      icon: "add_alert",
-                      message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful dashboard for every web developer."
-
-                    }, {
-                      type: 'success',
-                      timer: 4000,
-                      placement: {
-                        from: from,
-                        align: align
-                      }
-                    });
-                  }
-                </script>
                 <div class="card-body">
                   <div class="table-responsive">
+                      <% if(typeof deleteUser != 'undefined' ) { %>
+                        <div class="alert alert-success" role="alert">
+                          <%= deleteUser %>
+                        </div>
+                        <% } %>
                     <div class="col-md-12 text-right">
                       <a href="/usuario/novo" class="btn btn-sm btn-primary">Novo usuário</a>
                     </div>
@@ -108,7 +91,7 @@
                             <%= user.id %>
                           </td>
                           <td>
-                            <%= user.username %>
+                            <%= user.login %>
                           </td>
                           <td>
                             <%= user.email %>
@@ -116,8 +99,8 @@
                           <td class="td-actions text-right">
                             <a href="/editar/<%= user.id %>" class="btn btn-success btn-link"><i
                                 class="material-icons">edit</i></a>
-                            <a href="/deletar/<%= user.id %>"
-                              onclick="confirm('Deseja realmente excluir o usuário?') ? this.parentElement.submit() : ''"
+                            <a href="#"
+                              onclick="return deletar();"
                               class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
                           </td>
                         </tr>
@@ -141,9 +124,11 @@
           </div>
         </div>
       </div>
+
       <%- include('navbars/footer.ejs'); %>
     </div>
   </div>
+
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -188,6 +173,15 @@
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
   <script src="../assets/js/script.js"></script>
-</body>
 
+</body>
+<script>
+    function deletar(){
+      if (confirm('Deseja realmente apagar o usuário?')) {
+        <% users.forEach(function(user) { %>
+        window.location.href = "/deletar/<%= user.id %>";
+        <% }); %>
+    }        
+  }
+</script>
 </html>
