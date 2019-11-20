@@ -85,26 +85,27 @@
                         </th>
                       </thead>
                       <tbody>
-                        <% users.forEach(function(user) { %>
-                        <tr>
+                       
+                        <% for(let i = 0; i < users.length; i++) { %>
+                        <tr id="<%= users[i].id %>">
                           <td>
-                            <%= user.id %>
+                            <%= users[i].id %>
                           </td>
                           <td>
-                            <%= user.login %>
+                            <%= users[i].login %>
                           </td>
                           <td>
-                            <%= user.email %>
+                            <%= users[i].email %>
                           </td>
                           <td class="td-actions text-right">
-                            <a href="/editar/<%= user.id %>" class="btn btn-success btn-link"><i
+                            <a href="/editar/<%= users[i].id %>" class="btn btn-success btn-link"><i
                                 class="material-icons">edit</i></a>
                             <a href="#"
-                              onclick="return deletar();"
+                            onclick="deletar(<%= users[i].id %>)"
                               class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
                           </td>
                         </tr>
-                        <% }); %>
+                        <% }; %>
                       </tbody>
                     </table>
                     <nav aria-label="Page navigation example">
@@ -173,15 +174,7 @@
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
   <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/ajax/user.js"></script>
 
 </body>
-<script>
-    function deletar(){
-      if (confirm('Deseja realmente apagar o usuário?')) {
-        <% users.forEach(function(user) { %>
-        window.location.href = "/deletar/<%= user.id %>";
-        <% }); %>
-    }        
-  }
-</script>
 </html>
