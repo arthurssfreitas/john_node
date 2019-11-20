@@ -61,11 +61,11 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                      <% if(typeof deleteUser != 'undefined' ) { %>
-                        <div class="alert alert-success" role="alert">
-                          <%= deleteUser %>
-                        </div>
-                        <% } %>
+                    <% if(typeof deleteUser != 'undefined' ) { %>
+                    <div class="alert alert-success" role="alert">
+                      <%= deleteUser %>
+                    </div>
+                    <% } %>
                     <div class="col-md-12 text-right">
                       <a href="/usuario/novo" class="btn btn-sm btn-primary">Novo usuário</a>
                     </div>
@@ -85,7 +85,7 @@
                         </th>
                       </thead>
                       <tbody>
-                       
+
                         <% for(let i = 0; i < users.length; i++) { %>
                         <tr id="<%= users[i].id %>">
                           <td>
@@ -100,9 +100,8 @@
                           <td class="td-actions text-right">
                             <a href="/editar/<%= users[i].id %>" class="btn btn-success btn-link"><i
                                 class="material-icons">edit</i></a>
-                            <a href="#"
-                            onclick="deletar(<%= users[i].id %>)"
-                              class="btn btn-danger btn-link"><i class="material-icons">delete</i></a>
+                            <a href="#" onclick="deletar(<%= users[i].id %>)" class="btn btn-danger btn-link"><i
+                                class="material-icons">delete</i></a>
                           </td>
                         </tr>
                         <% }; %>
@@ -131,6 +130,7 @@
   </div>
 
   <!--   Core JS Files   -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
@@ -177,4 +177,5 @@
   <script src="../assets/js/ajax/user.js"></script>
 
 </body>
+
 </html>
