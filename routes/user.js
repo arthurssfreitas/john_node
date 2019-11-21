@@ -6,18 +6,20 @@ module.exports = {
             let pagina = parseInt(req.query.pagina) || 1;
             let limit = parseInt(req.query.limit) || 10;
             let offset = (pagina - 1) * limit;
+            let all = await userDao.getAllUsers();
             let result = await userDao.getUserbyOffset(limit, offset);
             res.render('admin/user', {
                 users: result,
                 activePage: "users",
                 pageName: "Usuários",
                 limit: limit,
+                all: all,
                 offset: offset,
                 dados: req.session,
                 pagina: pagina
             });
         } else {
-            res.send('faça login para ver a página');
+            res.redirect('/');
         }
     },
     createUserPage: async (req, res) => {
@@ -50,17 +52,6 @@ module.exports = {
             }
         }
     },
-    editUserPage: async (req, res) => {
-        if (req.session.loggedin) {
-            let id = req.params.id;
-            let result = await userDao.getUserByid(id);
-            res.render('admin/user/edituser', {
-                activePage: "users",
-                pageName: "Editar Usuário",
-                users: result
-            });
-        }
-    },
     editUser: async (req, res) => {
         if (req.session.loggedin) {
             let id = req.params.id;
@@ -68,7 +59,7 @@ module.exports = {
             let senha = md5(req.body.senha);
             let confirm_password = md5(req.body.confirmar_senha);
             let email = req.body.email;
-
+            
             if(senha == confirm_password){
             await userDao.editUser(login, senha, email, id);
             }else{

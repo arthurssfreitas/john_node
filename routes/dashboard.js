@@ -8,7 +8,7 @@ module.exports = {
             });
 
         } else {
-            res.send('faça login para ver a página')
+            res.redirect('/');
         }
         res.end();
     },

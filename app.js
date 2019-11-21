@@ -22,7 +22,6 @@ const {
     createUser,
     createUserPage,
     editUser,
-    editUserPage,
     deleteUser
 } = require('./routes/user');
 const port = 3000;
@@ -76,7 +75,6 @@ app.get('/logout', logout);
 app.get('/usuario', getAllUsers);
 app.get('/usuario/novo', createUserPage);
 app.post('/usuario/novo', createUser);
-app.get('/editar/:id', editUserPage);
 app.post('/editar/:id', editUser);
 app.get('/deletar/:id', deleteUser);
 

@@ -88,17 +88,17 @@
 
                         <% for(let i = 0; i < users.length; i++) { %>
                         <tr id="<%= users[i].id %>">
-                          <td>
+                          <td >
                             <%= users[i].id %>
                           </td>
-                          <td>
+                          <td data-target="login">
                             <%= users[i].login %>
                           </td>
-                          <td>
+                          <td data-target="email">
                             <%= users[i].email %>
                           </td>
                           <td class="td-actions text-right">
-                            <a href="/editar/<%= users[i].id %>" class="btn btn-success btn-link"><i
+                              <a href="#" onclick="editUser(<%= users[i].id %>);" class="btn btn-success btn-link"><i
                                 class="material-icons">edit</i></a>
                             <a href="#" onclick="deleteUser(<%= users[i].id %>)" class="btn btn-danger btn-link"><i
                                 class="material-icons">delete</i></a>
@@ -124,10 +124,10 @@
           </div>
         </div>
       </div>
-
       <%- include('navbars/footer.ejs'); %>
     </div>
   </div>
+  
 
   <!--   Core JS Files   -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
