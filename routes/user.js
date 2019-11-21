@@ -66,20 +66,14 @@ module.exports = {
             let id = req.params.id;
             let login = req.body.login;
             let senha = md5(req.body.senha);
+            let confirm_password = md5(req.body.confirmar_senha);
             let email = req.body.email;
-            let result = await userDao.editUser(login, senha, email, id);
-            res.render('admin/user/edituser', {
-                editUser: "Usuário editado com sucesso!",
-                activePage: "users",
-                users: result,
-                pageName: "Editar Usuário"
-            });
-        } else {
-            res.render('admin/user/edituser', {
-                errorPass: "As senhas não são iguais!",
-                activePage: "users",
-                pageName: "Editar Usuário"
-            });
+
+            if(senha == confirm_password){
+            await userDao.editUser(login, senha, email, id);
+            }else{
+                res.status(204).send();
+            }
         }
     },
     deleteUser: async (req, res) => {

@@ -12,7 +12,7 @@ function msg(type, text) {
     })
 }
 
-function deletar(id) {
+function deleteUser(id) {
     var table = document.getElementById(id);
     Swal({
         title: 'Deseja remover o usuário?',
@@ -40,3 +40,22 @@ function deletar(id) {
         }
     })
 }
+    function editUser(id){
+        let login = document.getElementById('login').value;
+        let senha = document.getElementById('senha').value;
+        let confirmar_senha = document.getElementById('confirmar_senha').value;
+        let email = document.getElementById('email').value;
+        if(senha == confirmar_senha){
+        $.ajax({
+            url: '/editar/'+id,
+            method: 'GET',
+            data: {},
+            success: function (resp) {
+                if (resp) {
+                    msg('success', 'Usuário editado com sucesso!');
+                }
+
+            }
+        })
+        }
+    }
