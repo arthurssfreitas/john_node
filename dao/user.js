@@ -16,6 +16,14 @@ module.exports = {
             });
         });
     },
+    async getUserByLoginAndPass(login,pass) {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM tb_usuarios WHERE login = ? AND senha = ?', [login, pass], function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
     async getUserbyOffset(limit, offset) {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM tb_usuarios LIMIT ? OFFSET ?', [limit, offset], function (err, result) {
@@ -35,6 +43,14 @@ module.exports = {
     async editUser(login, senha, email, id) {
         return new Promise(function (resolve, reject) {
             db.query('UPDATE tb_usuarios SET login = ?, senha = ?, email = ? WHERE id = ?', [login, senha, email, id], function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    async editUserProfile(login, email, id) {
+        return new Promise(function (resolve, reject) {
+            db.query('UPDATE tb_usuarios SET login = ?, email = ? WHERE id = ?', [login, email, id], function (err, result) {
                 if (err) return reject(err);
                 return resolve(result);
             });
