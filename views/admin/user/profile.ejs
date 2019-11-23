@@ -42,11 +42,11 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-    <%- include('navbars/sidebar.ejs'); %>
+    <%- include('../navbars/sidebar.ejs'); %>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <%- include('navbars/navbar.ejs'); %>
+      <%- include('../navbars/navbar.ejs'); %>
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
@@ -58,21 +58,48 @@
                   <p class="card-category">Edite seus dados</p>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <div class="col-md-12 text-right">
+                        <a href="/usuario" class="btn btn-sm btn-primary">Voltar</a>
+                      </div>
+                    <% if(success_msg) { %>
+                      <div class="alert alert-success" role="alert"> <%= success_msg.success_msg %></div>
+                   <% } %>
+                   <% if(error_msg) { %>
+                    <div class="alert alert-danger" role="alert"> <%= error_msg.error_msg %></div>
+                 <% } %>
+                    <form method="POST" >
                         <div class="row">
                           <label class="col-sm-2 col-form-label">Login</label>
                           <div class="col-sm-7">
                             <div class="form-group bmd-form-group">
-                              <input class="form-control" name="login" id="login" type="text" placeholder="Login" value="<%= dados.login %>"
+                              <input class="form-control" name="login" id="login" type="text" placeholder="Login" value="<%= dados[0].login %>"
                                 required="true" aria-required="true">
                             </div>
                           </div>
                         </div>
                         <div class="row">
+                            <label class="col-sm-2 col-form-label">Senha</label>
+                            <div class="col-sm-7">
+                              <div class="form-group bmd-form-group">
+                                <input class="form-control" name="senha" id="senha" type="password" placeholder="Senha"
+                                  value="" required="true" aria-required="true">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                              <label class="col-sm-2 col-form-label">Confirmar Senha</label>
+                              <div class="col-sm-7">
+                                <div class="form-group bmd-form-group">
+                                  <input class="form-control" name="confirmar_senha" id="confirmar_senha" type="password"
+                                    placeholder="Confirmação de Senha" value="" required="true" aria-required="true">
+                                </div>
+                              </div>
+                            </div>
+                        <div class="row">
                           <label class="col-sm-2 col-form-label">Email</label>
                           <div class="col-sm-7">
                             <div class="form-group bmd-form-group">
-                              <input class="form-control" name="email" id="email" type="email" placeholder="Email" value="<%= dados.email %>"
+                              <input class="form-control" name="email" id="email" type="email" placeholder="Email" value="<%= dados[0].email %>"
                                 required="true" aria-required="true">
                             </div>
                           </div>
@@ -87,7 +114,7 @@
           </div>
         </div>
       </div>
-      <%- include('navbars/footer.ejs'); %>
+      <%- include('../navbars/footer.ejs'); %>
     </div>
   </div>
   <!--   Core JS Files   -->

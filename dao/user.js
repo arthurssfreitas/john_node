@@ -34,7 +34,7 @@ module.exports = {
     },
     async newUser(login, password, email) {
         return new Promise(function (resolve, reject) {
-            db.query('INSERT INTO tb_usuarios (login,senha,email) VALUES (?,?,?)', [login, password, email], function (err, result) {
+            db.query("INSERT INTO tb_usuarios (login,senha,email) VALUES (?,?,?)", [login, password, email], function (err, result) {
                 if (err) return reject(err);
                 return resolve(result);
             });
@@ -43,14 +43,6 @@ module.exports = {
     async editUser(login, senha, email, id) {
         return new Promise(function (resolve, reject) {
             db.query('UPDATE tb_usuarios SET login = ?, senha = ?, email = ? WHERE id = ?', [login, senha, email, id], function (err, result) {
-                if (err) return reject(err);
-                return resolve(result);
-            });
-        });
-    },
-    async editUserProfile(login, email, id) {
-        return new Promise(function (resolve, reject) {
-            db.query('UPDATE tb_usuarios SET login = ?, email = ? WHERE id = ?', [login, email, id], function (err, result) {
                 if (err) return reject(err);
                 return resolve(result);
             });

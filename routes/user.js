@@ -24,6 +24,7 @@ module.exports = {
         if (req.session.loggedin) {
             res.render('admin/user/createuser', {
                 activePage: "users",
+                dados: req.session,
                 pageName: "Novo Usuário"
             });
         }
@@ -56,6 +57,7 @@ module.exports = {
             res.render('admin/user/edituser', {
                 activePage: "users",
                 users: result,
+                dados: req.session,
                 pageName: "Editar Usuário"
             });      
         }
@@ -86,10 +88,12 @@ module.exports = {
     },
     deleteUser: async (req, res) => {
         let user = await userDao.getUserByid(req.session.id) || undefined;
-        if (user != undefined && req.session.loggedin) {
-            let id = req.params.id;
+        let id = req.params.id;
+        if (user != undefined && req.session.loggedin && id != req.session.userid) {
             res.send('Usuário deletado com sucesso!');
             await userDao.deleteUser(id);
+        }else{
+            res.send();
         }
     }
 }

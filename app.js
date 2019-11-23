@@ -88,8 +88,8 @@ app.post('/usuario/novo', createUser);
 app.get('/editar/:id', editUserPage);
 app.post('/editar/:id', editUser);
 app.get('/deletar/:id', deleteUser);
-app.get('/perfil', getProfilePage);
-app.post('/perfil', editProfile);
+app.get('/perfil/:id', getProfilePage);
+app.post('/perfil/:id', editProfile);
 
 
 // set the app to listen on the port

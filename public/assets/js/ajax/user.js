@@ -30,8 +30,12 @@ function deleteUser(id) {
                 data: {},
                 success: function (resp) {
                     if (resp) {
+                        console.log(resp);
                         msg('success', 'Usuário deletado com sucesso!');
                         table.remove();
+                        return "ok";
+                    }else{
+                        msg('error', 'Você não pode deletar a si mesmo!');
                         return "ok";
                     }
 
