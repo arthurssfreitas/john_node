@@ -81,6 +81,9 @@
                          <th>
                             Unidade
                             </th>
+                            <th>
+                              Categoria
+                              </th>
                          <th class="th-actions text-right">
                            Ações
                          </th>
@@ -100,8 +103,11 @@
                              <%= products[i].qty %>
                            </td>
                            <td data-target="unidade">
-
+                              <%= products[i].unidade %>
                               </td>
+                            <td data-target="categoria">
+                              <%= products[i].categoria %>
+                            </td>
                            <td class="td-actions text-right">
                                <a href="/editar/categoria/<%= products[i].id_produto %>" class="btn btn-success btn-link"><i
                                  class="material-icons">edit</i></a>
