@@ -7,13 +7,14 @@ module.exports = {
             let limit = parseInt(req.query.limit) || 10;
             let offset = (pagina - 1) * limit;
             let result = await categoryDao.getCategorybyOffset(limit, offset);
-            let qty = await categoryDao.getQtyProductsByCategory(1);
+            for(let i = 0; i < result.length; i++){
+                result[i].qty =  (await categoryDao.getQtyProductsByCategory(result[i].id_categoria))[0].qty;
+            }
             res.render('admin/category', {
                 categories: result,
                 activePage: "categories",
                 pageName: "Categorias",
                 limit: limit,
-                quantidade: qty,
                 offset: offset,
                 dados: req.session,
                 pagina: pagina
