@@ -17,13 +17,14 @@ module.exports = {
                 pagina: pagina
             });
         } else {
-            res.send('faça login para ver a página');
+            res.redirect('/');
         }
     },
     createUserPage: async (req, res) => {
         if (req.session.loggedin) {
             res.render('admin/user/createuser', {
                 activePage: "users",
+                dados: req.session,
                 pageName: "Novo Usuário"
             });
         }
@@ -36,11 +37,10 @@ module.exports = {
             let email = req.body.email;
             if (password == confirm_password) {
                 await userDao.newUser(login, password, email);
-                res.render('admin/user/createuser', {
-                    newUser: "Usuário cadastrado com sucesso!",
-                    activePage: "users",
-                    pageName: "Novo Usuário"
-                });
+                req.session.success_msg = {
+                    success_msg:  "Usuário cadastrado com sucesso!"
+                }
+                res.redirect('/usuario'); 
             } else {
                 res.render('admin/user/createuser', {
                     errorPass: "As senhas não são iguais!",
@@ -50,15 +50,16 @@ module.exports = {
             }
         }
     },
-    editUserPage: async (req, res) => {
+    editUserPage: async(req,res) => {
+        let id = req.params.id;
+        let result = await userDao.getUserByid(id);
         if (req.session.loggedin) {
-            let id = req.params.id;
-            let result = await userDao.getUserByid(id);
             res.render('admin/user/edituser', {
                 activePage: "users",
-                pageName: "Editar Usuário",
-                users: result
-            });
+                users: result,
+                dados: req.session,
+                pageName: "Editar Usuário"
+            });      
         }
     },
     editUser: async (req, res) => {
@@ -68,20 +69,31 @@ module.exports = {
             let senha = md5(req.body.senha);
             let confirm_password = md5(req.body.confirmar_senha);
             let email = req.body.email;
-
-            if(senha == confirm_password){
-            await userDao.editUser(login, senha, email, id);
-            }else{
-                res.status(204).send();
+            let result = await userDao.getUserByid(id);
+            if (senha == confirm_password) {
+                await userDao.editUser(login,senha,email,id);
+                req.session.success_msg = {
+                    success_msg:  "Usuário editado com sucesso!"
+                }
+                res.redirect('/usuario');         
+            } else {
+                res.render('admin/user/edituser', {
+                    errorPass: "As senhas não são iguais!",
+                    activePage: "users",
+                    users: result,
+                    pageName: "Editar Usuário"
+                });
             }
         }
     },
     deleteUser: async (req, res) => {
         let user = await userDao.getUserByid(req.session.id) || undefined;
-        if (user != undefined && req.session.loggedin) {
-            let id = req.params.id;
+        let id = req.params.id;
+        if (user != undefined && req.session.loggedin && id != req.session.userid) {
             res.send('Usuário deletado com sucesso!');
             await userDao.deleteUser(id);
+        }else{
+            res.send();
         }
     }
 }

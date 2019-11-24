@@ -30,8 +30,12 @@ function deleteUser(id) {
                 data: {},
                 success: function (resp) {
                     if (resp) {
+                        console.log(resp);
                         msg('success', 'Usuário deletado com sucesso!');
                         table.remove();
+                        return "ok";
+                    }else{
+                        msg('error', 'Você não pode deletar a si mesmo!');
                         return "ok";
                     }
 
@@ -40,22 +44,3 @@ function deleteUser(id) {
         }
     })
 }
-    function editUser(id){
-        let login = document.getElementById('login').value;
-        let senha = document.getElementById('senha').value;
-        let confirmar_senha = document.getElementById('confirmar_senha').value;
-        let email = document.getElementById('email').value;
-        if(senha == confirmar_senha){
-        $.ajax({
-            url: '/editar/'+id,
-            method: 'GET',
-            data: {},
-            success: function (resp) {
-                if (resp) {
-                    msg('success', 'Usuário editado com sucesso!');
-                }
-
-            }
-        })
-        }
-    }

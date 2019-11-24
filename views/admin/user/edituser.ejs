@@ -73,7 +73,7 @@
                      <%= errorPass %>
                    </div>
                    <% } %>
-                   <form method="POST" action="">
+                   <form method="POST">
                      <div class="row">
                        <label class="col-sm-2 col-form-label">Login</label>
                        <div class="col-sm-7">
@@ -111,7 +111,7 @@
                        </div>
                      </div>
                      <div class="card-footer ml-auto mr-auto">
-                       <button type="submit" onclick="editUser(<%= users[0].id %>)" class="btn btn-primary">Editar usuário</button>
+                       <button type="submit" class="btn btn-primary">Editar usuário</button>
                      </div>
                    </form>
                  </div>
@@ -167,7 +167,6 @@
    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
    <script src="../assets/demo/demo.js"></script>
    <script src="../assets/js/script.js"></script>
-   <script src="../assets/js/ajax/user.js"></script>
  </body>
  
  </html>

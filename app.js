@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const mysql = require('mysql');
 const path = require('path');
-const flash = require('req-flash');
+const flash = require('connect-flash');
 const md5 = require('md5');
 const app = express();
 
@@ -15,7 +15,9 @@ const {
 const {
     getDashboard,
     login,
-    logout
+    logout,
+    getProfilePage,
+    editProfile
 } = require('./routes/dashboard');
 const {
     getAllUsers,
@@ -47,10 +49,10 @@ global.db = db;
 global.md5 = md5;
 
 
-
 app.use(session({
     secret: 'secret',
     resave: true,
+    writable: true,
     saveUninitialized: true
 }));
 app.use(flash());
@@ -66,6 +68,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json()); // parse form data client
 app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
 app.use(fileUpload()); // configure fileupload
+app.use((req,res,next) =>{
+    res.locals.success_msg = req.session.success_msg;
+    res.locals.error_msg = req.session.error_msg;
+    delete req.session.success_msg;
+    delete req.session.error_msg;
+    next()
+});
 
 // routes for the app
 
@@ -79,6 +88,8 @@ app.post('/usuario/novo', createUser);
 app.get('/editar/:id', editUserPage);
 app.post('/editar/:id', editUser);
 app.get('/deletar/:id', deleteUser);
+app.get('/perfil/:id', getProfilePage);
+app.post('/perfil/:id', editProfile);
 
 
 // set the app to listen on the port

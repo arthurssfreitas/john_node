@@ -16,6 +16,14 @@ module.exports = {
             });
         });
     },
+    async getUserByLoginAndPass(login,pass) {
+        return new Promise(function (resolve, reject) {
+            db.query('SELECT * FROM tb_usuarios WHERE login = ? AND senha = ?', [login, pass], function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
     async getUserbyOffset(limit, offset) {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM tb_usuarios LIMIT ? OFFSET ?', [limit, offset], function (err, result) {
@@ -26,7 +34,7 @@ module.exports = {
     },
     async newUser(login, password, email) {
         return new Promise(function (resolve, reject) {
-            db.query('INSERT INTO tb_usuarios (login,senha,email) VALUES (?,?,?)', [login, password, email], function (err, result) {
+            db.query("INSERT INTO tb_usuarios (login,senha,email) VALUES (?,?,?)", [login, password, email], function (err, result) {
                 if (err) return reject(err);
                 return resolve(result);
             });
