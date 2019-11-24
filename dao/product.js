@@ -32,17 +32,17 @@ module.exports = {
             });
         });
     },
-    async newProduct(fk_categoria, nome, qty) {
+    async newProduct(nome, qty) {
         return new Promise(function (resolve, reject) {
-            db.query('INSERT INTO tb_produtos (fk_categoria,nome,qty) VALUES (?,?,?)', [fk_categoria, nome, qty], function (err, result) {
+            db.query('INSERT INTO tb_produtos (nome,qty) VALUES (?,?)', [nome, qty], function (err, result) {
                 if (err) return reject(err);
                 return resolve(result);
             });
         });
     },
-    async editProduct(fk_categoria, nome, qty, id_produto) {
+    async editProduct(nome, qty, id_produto) {
         return new Promise(function (resolve, reject) {
-            db.query('UPDATE tb_produtos SET fk_categoria = ?, nome = ?, qty = ? WHERE id_produto = ?', [fk_categoria, nome, qty, id_produto], function (err, result) {
+            db.query('UPDATE tb_produtos SET nome = ?, qty = ? WHERE id_produto = ?', [nome, qty, id_produto], function (err, result) {
                 if (err) return reject(err);
                 return resolve(result);
             });
