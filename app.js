@@ -39,6 +39,10 @@ const {
     editCategory
 } = require('./routes/category');
 
+const {
+    getAllProducts,
+} = require('./routes/product');
+
 const port = 3000;
 
 // create connection to database
@@ -112,6 +116,8 @@ app.post('/categoria/nova', createCategory);
 app.get('/editar/categoria/:id', editCategoryPage);
 app.post('/editar/categoria/:id', editCategory);
 app.get('/deletar/categoria/:id', deleteCategory);
+//produtos
+app.get('/produto/', getAllProducts);
 
 
 

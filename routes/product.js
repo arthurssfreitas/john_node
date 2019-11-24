@@ -1,5 +1,6 @@
 'use strict';
 const productDao = require('../dao/product');
+const unityDao = require('../dao/unity');
 module.exports = {
     getAllProducts: async (req, res) => {
         if (req.session.loggedin) {
@@ -7,6 +8,11 @@ module.exports = {
             let limit = parseInt(req.query.limit) || 10;
             let offset = (pagina - 1) * limit;
             let result = await productDao.getProductbyOffset(limit, offset);
+            let unidade = await unityDao.getAllUnities();
+                for(let i=0; i<result.length; i++){
+                    result[i].tipo = unidade[0].nome;
+                    console.log(result[i]);
+                }
             res.render('admin/product', {
                 products: result,
                 activePage: "products",
