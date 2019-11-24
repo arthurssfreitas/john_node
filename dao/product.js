@@ -16,6 +16,14 @@ module.exports = {
             });
         });
     },
+    async getProductsByUnity(fk_unidade){
+        return new Promise(function (resolve,reject){
+            db.query('SELECT * FROM tb_produtos where fk_unidade = ?', [fk_unidade], function(err,result){
+                if(err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
     async getProductByid(id_produto) {
         return new Promise(function (resolve, reject) {
             db.query('SELECT * FROM tb_produtos WHERE id_produto = ?', [id_produto], function (err, result) {

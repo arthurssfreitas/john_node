@@ -33,8 +33,15 @@ const {
 const {
     getAllCategories,
     createCategoryPage,
-    createCategory
+    createCategory,
+    deleteCategory,
+    editCategoryPage,
+    editCategory
 } = require('./routes/category');
+
+const {
+    getAllProducts,
+} = require('./routes/product');
 
 const port = 3000;
 
@@ -106,6 +113,13 @@ app.post('/perfil/:id', editProfile);
 app.get('/categoria/', getAllCategories);
 app.get('/categoria/nova', createCategoryPage);
 app.post('/categoria/nova', createCategory);
+app.get('/editar/categoria/:id', editCategoryPage);
+app.post('/editar/categoria/:id', editCategory);
+app.get('/deletar/categoria/:id', deleteCategory);
+//produtos
+app.get('/produto/', getAllProducts);
+
+
 
 
 // set the app to listen on the port
