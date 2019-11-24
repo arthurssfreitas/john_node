@@ -10,7 +10,7 @@ module.exports = {
     },
     async getQtyProductsByCategory(id_categoria){
         return new Promise(function(resolve,reject){
-            db.query('SELECT * FROM tb_produtos where fk_categoria = ?',[id_categoria], function(err,result){
+            db.query('SELECT count(*) as qty FROM tb_produtos where fk_categoria = ?',[id_categoria], function(err,result){
                 if(err) return reject(err);
                 return resolve(result);
             });
