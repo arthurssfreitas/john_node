@@ -44,3 +44,32 @@ function deleteUser(id) {
         }
     })
 }
+
+function deleteCategory(id) {
+    var table = document.getElementById(id);
+    Swal({
+        title: 'Deseja remover a categoria?',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, pode remover!',
+        cancelButtonText: 'Cancelar',
+        text: 'Essa ação não poderá ser desfeita.',
+        type: 'warning',
+        confirmButtonColor: '#F54400',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            $.ajax({
+                url: '/deletar/categoria/' + id,
+                method: 'GET',
+                data: {},
+                success: function (resp) {
+                    if (resp) {
+                        console.log(resp);
+                        msg('success', 'Categoria deletada com sucesso!');
+                        table.remove();
+                        return "ok";
+                    }
+                }
+            })
+        }
+    })
+}

@@ -95,9 +95,9 @@
                              <%= categories[i].qty %>
                            </td>
                            <td class="td-actions text-right">
-                               <a href="/editar/<%= categories[i].id %>" class="btn btn-success btn-link"><i
+                               <a href="/editar/categoria/<%= categories[i].id_categoria %>" class="btn btn-success btn-link"><i
                                  class="material-icons">edit</i></a>
-                             <a href="#" onclick="deleteCategory()" class="btn btn-danger btn-link"><i
+                             <a href="#" onclick="deleteCategory(<%= categories[i].id_categoria %>)" class="btn btn-danger btn-link"><i
                                  class="material-icons">delete</i></a>
                            </td>
                          </tr>
@@ -172,7 +172,7 @@
    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
    <script src="../assets/demo/demo.js"></script>
    <script src="../assets/js/script.js"></script>
-   <script src="../assets/js/ajax/user.js"></script>
+   <script src="../assets/js/ajax/ajax.js"></script>
  
  </body>
  

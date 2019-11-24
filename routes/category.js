@@ -35,32 +35,42 @@ module.exports = {
     createCategory: async (req, res) => {
         if (req.session.loggedin) {
             let nome = req.body.nome_categoria;
-            console.log(nome);
             await categoryDao.newCategory(nome);
-            res.render('admin/category/createcategory', {
-                newCategory: "Categoria cadastrada com sucesso!",
-                activePage: "categories",
-                dados: req.session,
-                pageName: "Nova Categoria",
-            });
+            req.session.success_msg = {
+                success_msg:  "Categoria cadastrada com sucesso!"
+            }
+            res.redirect('/categoria'); 
+            
         }
     },
     editCategoryPage: async (req, res) => {
         if (req.session.loggedin) {
-            let id_Categoria = req.params.id_Categoria;
-            let result = await categoryDao.getCategoryById(id_Categoria);
+            let id = req.params.id;
+            let result = await categoryDao.getCategoryById(id);
             res.render('admin/category/editcategory', {
                 activePage: "categories",
-                pageName: "Editar Categoria",
-                categories: result
+                dados: req.session,
+                categories: result[0],
+                pageName: "Editar Categoria"
             });
+        }
+    },
+    editCategory: async (req, res) => {
+        if (req.session.loggedin) {
+            let id = req.params.id;
+            let nome = req.body.nome_categoria;
+            await categoryDao.editCategory(id,nome)
+            req.session.success_msg = {
+                success_msg:  "Categoria editada com sucesso!"
+            }
+            res.redirect('/categoria');
         }
     },
     deleteCategory: async (req, res) => {
         let category = await categoryDao.getCategoryById(req.session.id) || undefined;
         if (category != undefined && req.session.loggedin) {
             let id = req.params.id;
-            res.send('Categoria deletado com sucesso!');
+            res.send('Categoria deletada com sucesso!');
             await categoryDao.deleteCategory(id);
         }
     }
