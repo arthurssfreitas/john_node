@@ -12,6 +12,7 @@ const app = express();
 const {
     getLoginPage
 } = require('./routes/index');
+
 const {
     getDashboard,
     login,
@@ -19,6 +20,7 @@ const {
     getProfilePage,
     editProfile
 } = require('./routes/dashboard');
+
 const {
     getAllUsers,
     createUser,
@@ -27,6 +29,13 @@ const {
     editUserPage,
     deleteUser
 } = require('./routes/user');
+
+const {
+    getAllCategories,
+    createCategoryPage,
+    createCategory
+} = require('./routes/category');
+
 const port = 3000;
 
 // create connection to database
@@ -35,7 +44,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'socka'
+    database: 'db_john'
 });
 
 // connect to database
@@ -78,18 +87,25 @@ app.use((req,res,next) =>{
 
 // routes for the app
 
+//painel
 app.get('/', getLoginPage);
 app.get('/painel', getDashboard);
 app.post('/auth', login);
 app.get('/logout', logout);
+//usuario
 app.get('/usuario', getAllUsers);
 app.get('/usuario/novo', createUserPage);
 app.post('/usuario/novo', createUser);
 app.get('/editar/:id', editUserPage);
 app.post('/editar/:id', editUser);
 app.get('/deletar/:id', deleteUser);
+//perfil
 app.get('/perfil/:id', getProfilePage);
 app.post('/perfil/:id', editProfile);
+//categorias
+app.get('/categoria/', getAllCategories);
+app.get('/categoria/nova', createCategoryPage);
+app.post('/categoria/nova', createCategory);
 
 
 // set the app to listen on the port

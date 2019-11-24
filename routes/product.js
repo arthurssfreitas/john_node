@@ -30,10 +30,9 @@ module.exports = {
     },
     createProduct: async (req, res) => {
         if (req.session.loggedin) {
-            let fk_categoria = req.body.fk_categoria;
             let nome = req.body.nome;
             let qty = req.body.qty;
-            await productDao.newProduct(fk_categoria, nome, qty);
+            await productDao.newProduct(nome, qty);
             res.render('admin/product/createproduct', {
                 newProduct: "Produto cadastrado com sucesso!",
                 activePage: "products",
