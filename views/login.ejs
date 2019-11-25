@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V1</title>
+	<title>Painel de acesso | John of the fish</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -56,11 +56,13 @@
 							Entrar
 						</button>
 					</div>
-
-					<div class="text-center p-t-12">
+					<% if(error_msg) { %>
+					<div class="text-center p-t-12" style="color: red;">
+							<%= error_msg.error_msg %>
 					</div>
-
+					<% } %>
 					<div class="text-center p-t-136">
+						
 					</div>
 				</form>
 			</div>

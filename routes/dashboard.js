@@ -30,11 +30,17 @@ module.exports = {
                 await userDao.getUserByLoginAndPass(login, senha);
                 await res.redirect('/painel');
             } else {
-                res.send('Incorrect login and/or senha!');
+                req.session.error_msg = {
+                    error_msg: "Usuário ou senha estão incorretos!"
+                }
+                res.redirect('/');
             }
             res.end();
         } else {
-            res.send('Please enter login and senha!');
+            req.session.error_msg = {
+                error_msg: "Preencha os dados de acesso!"
+            }
+            res.redirect('/');
             res.end();
         }
     },
