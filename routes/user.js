@@ -38,9 +38,9 @@ module.exports = {
             if (password == confirm_password) {
                 await userDao.newUser(login, password, email);
                 req.session.success_msg = {
-                    success_msg:  "Usuário cadastrado com sucesso!"
+                    success_msg: "Usuário cadastrado com sucesso!"
                 }
-                res.redirect('/usuario'); 
+                res.redirect('/usuario');
             } else {
                 res.render('admin/user/createuser', {
                     errorPass: "As senhas não são iguais!",
@@ -50,7 +50,7 @@ module.exports = {
             }
         }
     },
-    editUserPage: async(req,res) => {
+    editUserPage: async (req, res) => {
         let id = req.params.id;
         let result = await userDao.getUserByid(id);
         if (req.session.loggedin) {
@@ -59,7 +59,7 @@ module.exports = {
                 users: result,
                 dados: req.session,
                 pageName: "Editar Usuário"
-            });      
+            });
         }
     },
     editUser: async (req, res) => {
@@ -71,11 +71,11 @@ module.exports = {
             let email = req.body.email;
             let result = await userDao.getUserByid(id);
             if (senha == confirm_password) {
-                await userDao.editUser(login,senha,email,id);
+                await userDao.editUser(login, senha, email, id);
                 req.session.success_msg = {
-                    success_msg:  "Usuário editado com sucesso!"
+                    success_msg: "Usuário editado com sucesso!"
                 }
-                res.redirect('/usuario');         
+                res.redirect('/usuario');
             } else {
                 res.render('admin/user/edituser', {
                     errorPass: "As senhas não são iguais!",
@@ -92,7 +92,7 @@ module.exports = {
         if (user != undefined && req.session.loggedin && id != req.session.userid) {
             res.send('Usuário deletado com sucesso!');
             await userDao.deleteUser(id);
-        }else{
+        } else {
             res.send();
         }
     }

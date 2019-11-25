@@ -67,6 +67,37 @@ function deleteCategory(id) {
                         msg('success', 'Categoria deletada com sucesso!');
                         table.remove();
                         return "ok";
+                    }else{
+                        msg('error', 'Você não pode deletar a categoria Padrão!');
+                        return "ok";
+                    }
+                }
+            })
+        }
+    })
+}
+function deleteProduct(id) {
+    var table = document.getElementById(id);
+    Swal({
+        title: 'Deseja remover o produto?',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, pode remover!',
+        cancelButtonText: 'Cancelar',
+        text: 'Essa ação não poderá ser desfeita.',
+        type: 'warning',
+        confirmButtonColor: '#F54400',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+            $.ajax({
+                url: '/deletar/produto/' + id,
+                method: 'GET',
+                data: {},
+                success: function (resp) {
+                    if (resp) {
+                        console.log(resp);
+                        msg('success', 'Produto deletado com sucesso!');
+                        table.remove();
+                        return "ok";
                     }
                 }
             })

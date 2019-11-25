@@ -40,7 +40,7 @@ CREATE TABLE `tb_categorias` (
 --
 
 INSERT INTO `tb_categorias` (`id_categoria`, `nome`) VALUES
-(1, 'Legumes'),
+(1, 'Padrão'),
 (2, 'Carnes');
 
 -- --------------------------------------------------------
@@ -95,7 +95,8 @@ CREATE TABLE `tb_unidade_medida` (
 --
 
 INSERT INTO `tb_unidade_medida` (`id_unidade`, `nome`) VALUES
-(1, 'Quilograma'),
+(1, 'Padrão'),
+(2, 'Quilograma'),
 (3, 'Unidade');
 
 -- --------------------------------------------------------
@@ -206,3 +207,17 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+DELIMITER $$
+CREATE TRIGGER category_delete BEFORE DELETE ON tb_categorias
+  FOR EACH ROW BEGIN
+    UPDATE tb_produtos SET fk_categoria = 1 WHERE fk_categoria = OLD.id_categoria;
+  END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER unidade_delete BEFORE DELETE ON tb_unidade_medida
+  FOR EACH ROW BEGIN
+    UPDATE tb_produtos SET fk_unidade = 1 WHERE fk_unidade = OLD.id_unidade;
+  END $$
+DELIMITER ;

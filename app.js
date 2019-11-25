@@ -41,6 +41,11 @@ const {
 
 const {
     getAllProducts,
+    createProductPage,
+    createProduct,
+    deleteProduct,
+    editProductPage,
+    editProduct
 } = require('./routes/product');
 
 const port = 3000;
@@ -118,6 +123,11 @@ app.post('/editar/categoria/:id', editCategory);
 app.get('/deletar/categoria/:id', deleteCategory);
 //produtos
 app.get('/produto/', getAllProducts);
+app.get('/produto/novo', createProductPage);
+app.post('/produto/novo', createProduct);
+app.get('/editar/produto/:id', editProductPage);
+app.post('/editar/produto/:id', editProduct);
+app.get('/deletar/produto/:id', deleteProduct);
 
 
 
