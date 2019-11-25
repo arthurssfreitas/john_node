@@ -7,8 +7,8 @@ module.exports = {
             let limit = parseInt(req.query.limit) || 10;
             let offset = (pagina - 1) * limit;
             let result = await categoryDao.getCategorybyOffset(limit, offset);
-            for(let i = 0; i < result.length; i++){
-                result[i].qty =  (await categoryDao.getQtyProductsByCategory(result[i].id_categoria))[0].qty;
+            for (let i = 0; i < result.length; i++) {
+                result[i].qty = (await categoryDao.getQtyProductsByCategory(result[i].id_categoria))[0].qty;
             }
             res.render('admin/category', {
                 categories: result,
@@ -20,7 +20,7 @@ module.exports = {
                 pagina: pagina
             });
         } else {
-            res.send('faça login para ver a página');
+            res.redirect('/');
         }
     },
     createCategoryPage: async (req, res) => {
@@ -37,10 +37,10 @@ module.exports = {
             let nome = req.body.nome_categoria;
             await categoryDao.newCategory(nome);
             req.session.success_msg = {
-                success_msg:  "Categoria cadastrada com sucesso!"
+                success_msg: "Categoria cadastrada com sucesso!"
             }
-            res.redirect('/categoria'); 
-            
+            res.redirect('/categoria');
+
         }
     },
     editCategoryPage: async (req, res) => {
@@ -59,19 +59,21 @@ module.exports = {
         if (req.session.loggedin) {
             let id = req.params.id;
             let nome = req.body.nome_categoria;
-            await categoryDao.editCategory(id,nome)
+            await categoryDao.editCategory(id, nome)
             req.session.success_msg = {
-                success_msg:  "Categoria editada com sucesso!"
+                success_msg: "Categoria editada com sucesso!"
             }
             res.redirect('/categoria');
         }
     },
     deleteCategory: async (req, res) => {
-        let category = await categoryDao.getCategoryById(req.session.id) || undefined;
-        if (category != undefined && req.session.loggedin) {
-            let id = req.params.id;
-            res.send('Categoria deletada com sucesso!');
+        let id = req.params.id;
+        let category = await categoryDao.getCategoryById(id) || undefined;
+        if (category != undefined && req.session.loggedin && id != 1) {
             await categoryDao.deleteCategory(id);
+            res.send('Categoria deletada com sucesso!');            
+        } else {
+            res.send();
         }
     }
 }

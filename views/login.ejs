@@ -1,56 +1,93 @@
-<% include headers/header.ejs %>
-		<meta charset="utf-8">
-		<title><%= title %></title>
-		<style>
-		.login-form {
-			width: 300px;
-			margin: 0 auto;
-			font-family: Tahoma, Geneva, sans-serif;
-		}
-		.login-form h1 {
-			text-align: center;
-			color: #4d4d4d;
-			font-size: 24px;
-			padding: 20px 0 20px 0;
-		}
-		.login-form input[type="password"],
-		.login-form input[type="text"] {
-			width: 100%;
-			padding: 15px;
-			border: 1px solid #dddddd;
-			margin-bottom: 15px;
-			box-sizing:border-box;
-		}
-		.login-form input[type="submit"] {
-			width: 100%;
-			padding: 15px;
-			background-color: #535b63;
-			border: 0;
-			box-sizing: border-box;
-			cursor: pointer;
-			font-weight: bold;
-			color: #ffffff;
-		}
-		</style>
-	</head>
-	<body>
-		<div class="login-form">
-			<% if(!session.login) { %>
-			<h1>Acessar o sistema</h1>
-			<form action="auth" method="POST">
-				<input type="text" name="login" placeholder="Login" required>
-				<input type="password" name="senha" placeholder="Senha" required>
-				<input type="submit" value="Entrar">
-			</form>
-			<% }else{ %>
-				<form action="#">
-						<input disabled type="text" name="login" placeholder="Login" required>
-						<input disabled type="password" name="senha" placeholder="Senha" required>
-						<input disabled type="submit" value="Entrar">
-					</form>
-			<% } %>	
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Painel de acesso | John of the fish</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="../assets/img/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../assets/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../assets/css/util.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="../assets/img/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form" action="auth" method="POST">
+					<span class="login100-form-title">
+						John of the fish
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Digite um email válido! Ex: email@dominio.com">
+						<input class="input100" type="text" name="login" placeholder="Login">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Digita sua senha">
+						<input class="input100" type="password" name="senha" placeholder="Senha">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Entrar
+						</button>
+					</div>
+					<% if(error_msg) { %>
+					<div class="text-center p-t-12" style="color: red;">
+							<%= error_msg.error_msg %>
+					</div>
+					<% } %>
+					<div class="text-center p-t-136">
+						
+					</div>
+				</form>
+			</div>
 		</div>
-	</body>
-</html>
-<script>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="../assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../assets/vendor/bootstrap/js/popper.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../assets/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../assets/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
 	</script>
+<!--===============================================================================================-->
+	<script src="../assets/js/main.js"></script>
+
+</body>
+</html>

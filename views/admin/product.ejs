@@ -56,8 +56,8 @@
              <div class="col-md-12">
                <div class="card">
                  <div class="card-header card-header-primary">
-                   <h4 class="card-title ">Categorias cadastradas</h4>
-                   <p class="card-category">Listagem de todos as categorias</p>
+                   <h4 class="card-title ">Produtos cadastrados</h4>
+                   <p class="card-category">Listagem de todos os produtos</p>
                  </div>
                  <div class="card-body">
                    <div class="table-responsive">
@@ -65,7 +65,7 @@
                        <div class="alert alert-success" role="alert"> <%= success_msg.success_msg %></div>
                     <% } %>
                      <div class="col-md-12 text-right">
-                       <a href="/categoria/nova" class="btn btn-sm btn-primary">Nova categoria</a>
+                       <a href="/produto/novo" class="btn btn-sm btn-primary">Novo produto</a>
                      </div>
                      <table class="table">
                        <thead class=" text-primary">
@@ -89,7 +89,6 @@
                          </th>
                        </thead>
                        <tbody>
-                            
                          <% for(let i = 0; i < products.length; i++) { %>
       
                          <tr id="<%= products[i].id_produto %>">
@@ -109,9 +108,9 @@
                               <%= products[i].categoria %>
                             </td>
                            <td class="td-actions text-right">
-                               <a href="/editar/categoria/<%= products[i].id_produto %>" class="btn btn-success btn-link"><i
+                               <a href="/editar/produto/<%= products[i].id_produto %>" class="btn btn-success btn-link"><i
                                  class="material-icons">edit</i></a>
-                             <a href="#" onclick="deleteCategory(<%= products[i].id_produto %>)" class="btn btn-danger btn-link"><i
+                             <a href="#" onclick="deleteProduct(<%= products[i].id_produto %>)" class="btn btn-danger btn-link"><i
                                  class="material-icons">delete</i></a>
                            </td>
                          </tr>
@@ -121,10 +120,10 @@
                      <nav aria-label="Page navigation example">
                        <ul class="pagination justify-content-center">
                          <li class="page-item <%= offset == 0 ?'disabled':'' %>">
-                           <a class="page-link" href="/usuario?pagina=<%= pagina - 1 %>">Anterior</a>
+                           <a class="page-link" href="/produto?pagina=<%= pagina - 1 %>">Anterior</a>
                          </li>
                          <li class="page-item <%= JSON.stringify(products.length) < limit ?'disabled':'' %>">
-                           <a class="page-link" href="/usuario?pagina=<%= pagina + 1 %>">Próximo</a>
+                           <a class="page-link" href="/produto?pagina=<%= pagina + 1 %>">Próximo</a>
                          </li>
                        </ul>
                      </nav>
