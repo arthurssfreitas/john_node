@@ -7,7 +7,6 @@ module.exports = {
         if (req.session.loggedin) {
             let dados = req.session;
             let produtos = await produtoDao.getAllProducts();
-            console.log(produtos);
             res.render('admin/dashboard.ejs', {
                 title: "Painel de controle | John of the fish",
                 activePage: "painel",

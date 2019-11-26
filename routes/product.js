@@ -110,7 +110,7 @@ module.exports = {
                 error_msg: "Produto inexistente."
             }
             res.redirect('/painel');
-        }else if(qty < 0 && req.session.loggedin){
+        }else if(qty < 0 && req.session.loggedin || qty == 0){
             req.session.error_msg = {
                 error_msg: "Quantidade invalida."
             }
@@ -136,7 +136,7 @@ module.exports = {
                 error_msg: "Produto inexistente."
             }
             res.redirect('/painel');
-        }else if(qty < 0 && req.session.loggedin){
+        }else if(qty < 0 && req.session.loggedin || qty == 0){
             req.session.error_msg = {
                 error_msg: "Quantidade invalida."
             }
