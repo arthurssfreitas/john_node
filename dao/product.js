@@ -136,5 +136,21 @@ module.exports = {
                 return resolve(result);
             });
         });
+    },
+    async withdrawProduct(id_produto, qty){
+        return new Promise(function (resolve, reject) {
+            db.query('CALL retiraProduto(?, ?)', [id_produto, qty], function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    async insertProduct(id_produto, qty){
+        return new Promise(function (resolve, reject) {
+            db.query('UPDATE tb_produtos SET qty = qty + ? WHERE id_produto = ?', [qty, id_produto], function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
     }
 }

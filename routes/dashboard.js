@@ -1,15 +1,19 @@
 'use strict';
 const userDao = require('../dao/user');
+const produtoDao = require('../dao/product');
 
 module.exports = {
     getDashboard: async (req, res) => {
         if (req.session.loggedin) {
             let dados = req.session;
+            let produtos = await produtoDao.getAllProducts();
+            console.log(produtos);
             res.render('admin/dashboard.ejs', {
                 title: "Painel de controle | John of the fish",
                 activePage: "painel",
                 dados: dados,
-                pageName: "Painel de controle"
+                pageName: "Painel de controle",
+                produtos: produtos
             });
 
         } else {
