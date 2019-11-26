@@ -49,7 +49,7 @@ const {
     insertProduct
 } = require('./routes/product');
 
-const port = 3000;
+const port = 3001;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
@@ -113,8 +113,8 @@ app.get('/editar/:id', editUserPage);
 app.post('/editar/:id', editUser);
 app.get('/deletar/:id', deleteUser);
 //perfil
-app.get('/perfil/:id', getProfilePage);
-app.post('/perfil/:id', editProfile);
+app.get('/perfil', getProfilePage);
+app.post('/perfil', editProfile);
 //categorias
 app.get('/categoria/', getAllCategories);
 app.get('/categoria/nova', createCategoryPage);

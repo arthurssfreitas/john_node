@@ -30,6 +30,8 @@ module.exports = {
                 dados: req.session,
                 pageName: "Nova Categoria"
             });
+        } else {
+            res.redirect('/');
         }
     },
     createCategory: async (req, res) => {
@@ -40,7 +42,8 @@ module.exports = {
                 success_msg: "Categoria cadastrada com sucesso!"
             }
             res.redirect('/categoria');
-
+        } else {
+            res.redirect('/');
         }
     },
     editCategoryPage: async (req, res) => {
@@ -53,6 +56,8 @@ module.exports = {
                 categories: result[0],
                 pageName: "Editar Categoria"
             });
+        } else {
+            res.redirect('/');
         }
     },
     editCategory: async (req, res) => {
@@ -64,14 +69,15 @@ module.exports = {
                 success_msg: "Categoria editada com sucesso!"
             }
             res.redirect('/categoria');
+        } else {
+            res.redirect('/');
         }
     },
     deleteCategory: async (req, res) => {
         let id = req.params.id;
         let category = await categoryDao.getCategoryById(id) || undefined;
         if (category != undefined && req.session.loggedin && id != 1) {
-            await categoryDao.deleteCategory(id);
-            res.send('Categoria deletada com sucesso!');            
+            res.send("Categoria deletada com sucesso!");
         } else {
             res.send();
         }

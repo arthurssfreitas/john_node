@@ -73,7 +73,8 @@
                             <div class="form-group bmd-form-group">
                               <select class="form-control" name="id_produto" id="produto-retirar">
                                 <%for(let i = 0; i < produtos.length; i++){%>
-                                  <option value="<%=produtos[i].id_produto%>"><%=produtos[i].nome%> | Em estoque: <%=produtos[i].qty%></option>
+                                  <option value="<%=produtos[i].id_produto%>"><%=produtos[i].nome%> | Em estoque: <%=produtos[i].qty%> | Tipo: <%=produtos[i].unidade%></option>
+                                  <%%>
                                 <%}%>
                               </select>
                             </div>
@@ -83,7 +84,7 @@
                                <label class="col-sm-2 col-form-label">Qtd</label>
                                <div class="col-sm-7">
                                  <div class="form-group bmd-form-group">
-                                   <input class="form-control" name="qty" id="qtd-retirada" type="number" placeholder="Digite a quantidade do produto..." value="0"
+                                   <input class="form-control" name="qty" id="qtd-retirada" type="number"  min="0" step=".01" value="0"
                                      required="true" aria-required="true">
                                  </div>
                                </div>
@@ -109,7 +110,7 @@
                               <div class="form-group bmd-form-group">
                                 <select class="form-control" name="id_produto" id="produto-retirar">
                                   <%for(let i = 0; i < produtos.length; i++){%>
-                                    <option value="<%=produtos[i].id_produto%>"><%=produtos[i].nome%> | Em estoque: <%=produtos[i].qty%></option>
+                                    <option value="<%=produtos[i].id_produto%>"><%=produtos[i].nome%> | Em estoque: <%=produtos[i].qty%> | Tipo: <%=produtos[i].unidade%></option>
                                   <%}%>
                                 </select>
                               </div>
@@ -119,7 +120,7 @@
                                  <label class="col-sm-2 col-form-label">Qtd</label>
                                  <div class="col-sm-7">
                                    <div class="form-group bmd-form-group">
-                                     <input class="form-control" name="qty" id="qtd-retirada" type="number" placeholder="Digite a quantidade do produto..." value="0"
+                                     <input class="form-control" name="qty" id="qtd-retirada" type="number" min="0" step=".01" value="0"
                                        required="true" aria-required="true">
                                    </div>
                                  </div>
@@ -132,65 +133,6 @@
                     </div>
                   </div>
               </div>
-          <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">person</i>
-                  </div>
-                  <p class="card-category">Usuários cadastrados</p>
-                  <h3 class="card-title">1
-                    <small>usuário</small>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">face</i>
-                    <a href="/usuario">Ver todos os usuários...</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">shopping_basket</i>
-                  </div>
-                  <p class="card-category">Quantidade de produtos</p>
-                  <h3 class="card-title">1
-                    <small>produtos</small>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">shopping_basket</i>
-                    <a href="/retirar/produto">Ver todos os produtos...</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">category</i>
-                  </div>
-                  <p class="card-category">Quantidade de categorias</p>
-                  <h3 class="card-title">1
-                    <small>categorias</small>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">category</i>
-                    <a href="/categoria">Ver todas as categorias...</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="row">
             <div class="col-md-4">
               <div class="card card-chart">
@@ -282,15 +224,10 @@
   <script src="../assets/js/plugins/arrive.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chartist JS -->
-  <script src="../assets/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
-  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
-  <script src="../assets/js/script.js"></script>
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
