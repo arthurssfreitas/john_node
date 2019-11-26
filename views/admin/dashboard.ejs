@@ -290,7 +290,7 @@
     function drawStuff() {
       var chartRetiradaUnidade = JSON.parse('<%-JSON.stringify(chartRetiradaUnidade)%>');
       let bkp = chartRetiradaUnidade;
-      chartRetiradaUnidade = [["Produto","Quantidade(KG)"]];
+      chartRetiradaUnidade = [["Produto","Quantidade"]];
       for(let i = 0; i < bkp.length; i++){
         chartRetiradaUnidade.push([bkp[i].labels, bkp[i].series]);
       }
