@@ -7,13 +7,18 @@ module.exports = {
         if (req.session.loggedin) {
             let dados = req.session;
             let produtos = await produtoDao.getAllProducts();
+            let chartRetirada = await produtoDao.chartWithdraw();
+            let chartRetiradaQuilograma = await produtoDao.chartWithdrawByUnity(2);
+            let chartRetiradaUnidade = await produtoDao.chartWithdrawByUnity(3);
             res.render('admin/dashboard.ejs', {
                 title: "Painel de controle | John of the fish",
                 activePage: "painel",
                 dados: dados,
                 pageName: "Painel de controle",
                 produtos: produtos,
-                
+                chartRetirada: chartRetirada[0],
+                chartRetiradaQuilograma: chartRetiradaQuilograma[0],
+                chartRetiradaUnidade: chartRetiradaUnidade[0]
             });
 
         } else {

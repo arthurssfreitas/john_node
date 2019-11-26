@@ -152,5 +152,21 @@ module.exports = {
                 return resolve(result);
             });
         });
+    },
+    async chartWithdraw(){
+        return new Promise(function (resolve, reject) {
+            db.query('CALL chartRetirada()', function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    async chartWithdrawByUnity(fk_unidade){
+        return new Promise(function (resolve, reject) {
+            db.query('CALL chartRetiradaPorUnidade(?)', [fk_unidade], function (err, result) {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
     }
 }
