@@ -12,7 +12,8 @@ module.exports = {
                 activePage: "painel",
                 dados: dados,
                 pageName: "Painel de controle",
-                produtos: produtos
+                produtos: produtos,
+                
             });
 
         } else {
@@ -51,22 +52,26 @@ module.exports = {
         if (req.session.loggedin) {
             req.session.destroy();
             res.redirect('/');
+        } else {
+            res.redirect('/');
         }
     },
     getProfilePage: async (req, res) => {
         if (req.session.loggedin) {
-            let id = req.params.id;
+            let id = req.session.userid;
             let dados = await userDao.getUserByid(id);
             res.render('admin/user/profile', {
                 activePage: "",
                 pageName: "Meu perfil",
                 dados: dados
             });
+        } else {
+            res.redirect('/');
         }
     },
     editProfile: async (req, res) => {
         if (req.session.loggedin) {
-            let id = req.params.id;
+            let id = req.session.userid;
             let login = req.body.login;
             let senha = md5(req.body.senha);
             let confirm_password = md5(req.body.confirmar_senha);
@@ -76,13 +81,15 @@ module.exports = {
                 req.session.success_msg = {
                     success_msg: "Perfil editado com sucesso!"
                 }
-                res.redirect('/perfil/' + id);
+                res.redirect('/perfil');
             } else {
                 req.session.error_msg = {
                     error_msg: "As senhas não são iguais!"
                 }
-                res.redirect('/perfil/' + id);
+                res.redirect('/perfil');
             }
+        } else {
+            res.redirect('/');
         }
     }
 };

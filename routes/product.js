@@ -35,6 +35,8 @@ module.exports = {
                 categorias: categorias,
                 pageName: "Novo Produto"
             });
+        } else {
+            res.redirect('/');
         }
     },
     createProduct: async (req, res) => {
@@ -48,6 +50,8 @@ module.exports = {
                 success_msg: "Produto cadastrado com sucesso!"
             }
             res.redirect('/produto');
+        } else {
+            res.redirect('/');
         }
     },
     editProductPage: async (req, res) => {
@@ -64,6 +68,8 @@ module.exports = {
                 categorias: categorias,
                 product: result
             })
+        } else {
+            res.redirect('/');
         }
     },
     editProduct: async (req, res) => {
@@ -78,6 +84,8 @@ module.exports = {
                 success_msg: "Produto editado com sucesso!"
             }
             res.redirect('/produto');
+        } else {
+            res.redirect('/');
         }
     },
     deleteProduct: async (req, res) => {
@@ -86,36 +94,38 @@ module.exports = {
         if (product != undefined && req.session.loggedin) {
             await productDao.deleteProduct(id);
             res.send('Produto deletado com sucesso!');
+        } else {
+            res.send();
         }
     },
     withdrawProduct: async (req, res) => {
         let id = req.body.id_produto;
         let qty = req.body.qty;
         let product = await productDao.getProductByid(id) || undefined;
-        if(qty > 0 && product != undefined && req.session.loggedin && product[0].qty >= qty){
+        if (qty > 0 && product != undefined && req.session.loggedin && product[0].qty >= qty) {
             await productDao.withdrawProduct(id, qty);
             req.session.success_msg = {
                 success_msg: "Quantidade retirada com sucesso!"
             }
             res.redirect('/painel');
-        } else if (qty > 0 && product != undefined && req.session.loggedin && product[0].qty < qty){
+        } else if (qty > 0 && product != undefined && req.session.loggedin && product[0].qty < qty) {
             //erro não tem produto suficiente
             req.session.error_msg = {
                 error_msg: "Quantidade de produto insuficiente."
             }
             res.redirect('/painel');
-        } else if (qty > 0 && product == undefined && req.session.loggedin){
+        } else if (qty > 0 && product == undefined && req.session.loggedin) {
             //erro produto não existe
             req.session.error_msg = {
                 error_msg: "Produto inexistente."
             }
             res.redirect('/painel');
-        }else if(qty < 0 && req.session.loggedin || qty == 0){
+        } else if (qty < 0 && req.session.loggedin || qty == 0) {
             req.session.error_msg = {
                 error_msg: "Quantidade invalida."
             }
             res.redirect('/painel');
-        } else if (!req.session.loggedin){
+        } else if (!req.session.loggedin) {
             //erro não está logado
             res.redirect('/');
         }
@@ -124,24 +134,24 @@ module.exports = {
         let id = req.body.id_produto;
         let qty = req.body.qty;
         let product = await productDao.getProductByid(id) || undefined;
-        if(qty > 0 && product != undefined && req.session.loggedin){
+        if (qty > 0 && product != undefined && req.session.loggedin) {
             await productDao.insertProduct(id, qty);
             req.session.success_msg = {
                 success_msg: "Quantidade adicionada com sucesso!"
             }
             res.redirect('/painel');
-        }else if (qty > 0 && product == undefined && req.session.loggedin){
+        } else if (qty > 0 && product == undefined && req.session.loggedin) {
             //erro produto não existe
             req.session.error_msg = {
                 error_msg: "Produto inexistente."
             }
             res.redirect('/painel');
-        }else if(qty < 0 && req.session.loggedin || qty == 0){
+        } else if (qty < 0 && req.session.loggedin || qty == 0) {
             req.session.error_msg = {
                 error_msg: "Quantidade invalida."
             }
             res.redirect('/painel');
-        } else if (!req.session.loggedin){
+        } else if (!req.session.loggedin) {
             //erro não está logado
             res.redirect('/');
         }
