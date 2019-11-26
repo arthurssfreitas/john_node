@@ -249,40 +249,24 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `chartRetiradaPorUnidade`(in unidade int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `db_john`.`chartRetiradaPorUnidade`(in unidade int)
 begin
-
 	select
-
 		a.fk_produto,
-
 		b.nome as labels,
-
-		count(a.id_retirada) as series
-
+		sum(a.qty) as series
 	from
-
 		tb_retirada a
-
 	inner join tb_produtos b 
-
 	on a.fk_produto = b.id_produto 
-
 	where
-
 		cast(dt_retirada as date) >= date_add(current_date,
-
 		interval -30 day)
-
 	and 
-
 		a.fk_unidade = unidade
-
 	group by
-
 		a.fk_produto;
-
-end ;;
+end
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
