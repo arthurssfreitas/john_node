@@ -101,11 +101,18 @@ module.exports = {
     withdrawProduct: async (req, res) => {
         let id = req.body.id_produto;
         let qty = req.body.qty;
+        let unidade = "";
         let product = await productDao.getProductByid(id) || undefined;
+        console.log(product[0]);
         if (qty > 0 && product != undefined && req.session.loggedin && product[0].qty >= qty) {
+            if(product[0].fk_unidade == 3){
+                qty = Math.round(qty);
+            } else if(product[0].fk_unidade == 2) {
+                unidade = "kg";
+            }  
             await productDao.withdrawProduct(id, qty);
             req.session.success_msg = {
-                success_msg: "Quantidade retirada com sucesso!"
+                success_msg: `${qty}${unidade} ${product[0].nome} retirado com sucesso!`
             }
             res.redirect('/painel');
         } else if (qty > 0 && product != undefined && req.session.loggedin && product[0].qty < qty) {
@@ -133,11 +140,17 @@ module.exports = {
     insertProduct: async (req, res) => {
         let id = req.body.id_produto;
         let qty = req.body.qty;
+        let unidade = "";
         let product = await productDao.getProductByid(id) || undefined;
         if (qty > 0 && product != undefined && req.session.loggedin) {
+            if(product[0].fk_unidade == 3){
+                qty = Math.round(qty);
+            } else if(product[0].fk_unidade == 2) {
+                unidade = "kg";
+            }   
             await productDao.insertProduct(id, qty);
             req.session.success_msg = {
-                success_msg: "Quantidade adicionada com sucesso!"
+                success_msg: `${qty}${unidade} ${product[0].nome} adicionado com sucesso!`
             }
             res.redirect('/painel');
         } else if (qty > 0 && product == undefined && req.session.loggedin) {
@@ -155,5 +168,5 @@ module.exports = {
             //erro não está logado
             res.redirect('/');
         }
-    }
+    },
 }

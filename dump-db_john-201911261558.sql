@@ -1,13 +1,13 @@
--- MySQL dump 10.16  Distrib 10.1.43-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
 --
 -- Host: localhost    Database: db_john
 -- ------------------------------------------------------
--- Server version	10.1.43-MariaDB-0ubuntu0.18.04.1
+-- Server version	5.5.5-10.3.15-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -26,7 +26,7 @@ CREATE TABLE `tb_categorias` (
   `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `tb_categorias` (
 
 LOCK TABLES `tb_categorias` WRITE;
 /*!40000 ALTER TABLE `tb_categorias` DISABLE KEYS */;
-INSERT INTO `tb_categorias` VALUES (1,'Padrão'),(2,'Carnes');
+INSERT INTO `tb_categorias` VALUES (1,'Padrão'),(2,'Carnes'),(3,'Legumes');
 /*!40000 ALTER TABLE `tb_categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -48,8 +48,11 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER category_delete BEFORE DELETE ON tb_categorias
+
   FOR EACH ROW BEGIN
+
     UPDATE tb_produtos SET fk_categoria = 1 WHERE fk_categoria = OLD.id_categoria;
+
   END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -75,7 +78,7 @@ CREATE TABLE `tb_produtos` (
   KEY `unidade` (`fk_unidade`),
   CONSTRAINT `categoria` FOREIGN KEY (`fk_categoria`) REFERENCES `tb_categorias` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `unidade` FOREIGN KEY (`fk_unidade`) REFERENCES `tb_unidade_medida` (`id_unidade`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +87,7 @@ CREATE TABLE `tb_produtos` (
 
 LOCK TABLES `tb_produtos` WRITE;
 /*!40000 ALTER TABLE `tb_produtos` DISABLE KEYS */;
-INSERT INTO `tb_produtos` VALUES (1,'Batata',4,1,3),(2,'Cenoura',2,1,3),(3,'Picanha',1,2,1),(4,'Linguiça',1,2,2);
+INSERT INTO `tb_produtos` VALUES (1,'Batata',4,3,2),(2,'Cenoura',9,3,2),(8,'Nuggets',14,2,3);
 /*!40000 ALTER TABLE `tb_produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +113,7 @@ CREATE TABLE `tb_retirada` (
   CONSTRAINT `retirada_categoria` FOREIGN KEY (`fk_categoria`) REFERENCES `tb_categorias` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `retirada_produto` FOREIGN KEY (`fk_produto`) REFERENCES `tb_produtos` (`id_produto`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `retirada_unidade` FOREIGN KEY (`fk_unidade`) REFERENCES `tb_unidade_medida` (`id_unidade`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +122,7 @@ CREATE TABLE `tb_retirada` (
 
 LOCK TABLES `tb_retirada` WRITE;
 /*!40000 ALTER TABLE `tb_retirada` DISABLE KEYS */;
-INSERT INTO `tb_retirada` VALUES (1,2,1,3,1,'2019-11-25 20:17:59'),(2,1,1,3,3,'2019-11-25 21:45:41'),(3,1,1,3,1,'2019-11-25 21:47:10'),(4,2,1,3,1,'2019-11-25 21:48:30'),(5,4,2,2,1,'2019-11-25 21:49:03'),(6,1,1,3,1,'2019-11-25 21:50:18'),(7,1,1,3,1,'2019-11-25 22:18:57'),(8,1,1,3,1,'2019-11-25 22:19:47'),(9,1,1,3,50,'2019-11-25 22:20:40');
+INSERT INTO `tb_retirada` VALUES (38,1,3,2,1,'2019-11-26 14:44:27'),(39,1,3,2,2,'2019-11-26 14:44:35'),(40,2,3,2,1,'2019-11-26 14:53:13'),(41,8,2,3,1,'2019-11-26 14:53:16');
 /*!40000 ALTER TABLE `tb_retirada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,8 +159,11 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER unidade_delete BEFORE DELETE ON tb_unidade_medida
+
   FOR EACH ROW BEGIN
+
     UPDATE tb_produtos SET fk_unidade = 1 WHERE fk_unidade = OLD.id_unidade;
+
   END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -178,7 +184,7 @@ CREATE TABLE `tb_usuarios` (
   `senha` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,30 +193,124 @@ CREATE TABLE `tb_usuarios` (
 
 LOCK TABLES `tb_usuarios` WRITE;
 /*!40000 ALTER TABLE `tb_usuarios` DISABLE KEYS */;
-INSERT INTO `tb_usuarios` VALUES (1,'123','202cb962ac59075b964b07152d234b70','123@123'),(2,'321','caf1a3dfb505ffed0d024130f58c5cfa','321@321');
+INSERT INTO `tb_usuarios` VALUES (1,'123','202cb962ac59075b964b07152d234b70','123@123'),(3,'paulo','202cb962ac59075b964b07152d234b70','paulo.441997@gmail.com');
 /*!40000 ALTER TABLE `tb_usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'db_john'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `chartRetirada` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `chartRetirada`()
+begin
+
+	select
+
+		cast(dt_retirada as date) as labels,
+
+		count(*) as series
+
+	from
+
+		tb_retirada
+
+	where
+
+		cast(dt_retirada as date) >= date_add(current_date,
+
+		interval -30 day)
+
+	group by
+
+		cast(dt_retirada as date);
+
+	end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `chartRetiradaPorUnidade` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `chartRetiradaPorUnidade`(in unidade int)
+begin
+
+	select
+
+		a.fk_produto,
+
+		b.nome as labels,
+
+		count(a.id_retirada) as series
+
+	from
+
+		tb_retirada a
+
+	inner join tb_produtos b 
+
+	on a.fk_produto = b.id_produto 
+
+	where
+
+		cast(dt_retirada as date) >= date_add(current_date,
+
+		interval -30 day)
+
+	and 
+
+		a.fk_unidade = unidade
+
+	group by
+
+		a.fk_produto;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `retiraProduto` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `retiraProduto`(in id int, in retirada int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `retiraProduto`(in id float, in retirada float)
 BEGIN
+
 	DECLARE prod_categoria INT;
+
 	DECLARE prod_unidade INT;
+
 	SELECT fk_categoria, fk_unidade into prod_categoria, prod_unidade from tb_produtos where id_produto = id;  
+
 	UPDATE tb_produtos set qty = qty - retirada where id_produto = id;
+
 	INSERT INTO tb_retirada (fk_produto, fk_categoria, fk_unidade, qty, dt_retirada) VALUES(id, prod_categoria, prod_unidade, retirada, CURRENT_TIME);
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -227,4 +327,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-25 22:25:27
+-- Dump completed on 2019-11-26 14:58:18

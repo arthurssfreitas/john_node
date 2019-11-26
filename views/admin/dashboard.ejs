@@ -108,7 +108,7 @@
                             <label class="col-sm-2 col-form-label">Nome do produto</label>
                             <div class="col-sm-7">
                               <div class="form-group bmd-form-group">
-                                <select class="form-control" name="id_produto" id="produto-retirar">
+                                <select class="form-control" name="id_produto" id="produto-adicionar">
                                   <%for(let i = 0; i < produtos.length; i++){%>
                                     <option value="<%=produtos[i].id_produto%>"><%=produtos[i].nome%> | Em estoque: <%=produtos[i].qty%> | Tipo: <%=produtos[i].unidade%></option>
                                   <%}%>
@@ -120,7 +120,7 @@
                                  <label class="col-sm-2 col-form-label">Qtd</label>
                                  <div class="col-sm-7">
                                    <div class="form-group bmd-form-group">
-                                     <input class="form-control" name="qty" id="qtd-retirada" type="number" min="0" step=".01" value="0"
+                                     <input class="form-control" name="qty" id="qtd-adicionada" type="number" min="0" step=".01" value="0"
                                        required="true" aria-required="true">
                                    </div>
                                  </div>
@@ -134,55 +134,47 @@
                   </div>
               </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="card card-chart">
-                <div class="card-header card-header-success">
-                  <div class="ct-chart" id="dailySalesChart"></div>
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Historico de retiradas</h4>
+                    <p class="card-category">Últimos 30 dias</p>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Daily Sales</h4>
-                  <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                    <div id="chartRetirada"></div>
                 </div>
                 <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> updated 4 minutes ago
-                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card card-chart">
-                <div class="card-header card-header-warning">
-                  <div class="ct-chart" id="websiteViewsChart"></div>
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">Email Subscriptions</h4>
-                  <p class="card-category">Last Campaign Performance</p>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="card card-chart">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title ">Produtos mais retirados (Quilograma)</h4>
+                      <p class="card-category">Últimos 30 dias</p>
+                  </div>
+                  <div class="card-body">
+                      <div id="chartRetiradaQuilograma" style="width: 800px; height: 600px;"></div>
+                  </div>
+                  <div class="card-footer">
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-chart">
-                <div class="card-header card-header-danger">
-                  <div class="ct-chart" id="completedTasksChart"></div>
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">Completed Tasks</h4>
-                  <p class="card-category">Last Campaign Performance</p>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+              <div class="col-md-6">
+                  <div class="card card-chart">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Produtos mais retirados (Unidade)</h4>
+                        <p class="card-category">Últimos 30 dias</p>
+                    </div>
+                    <div class="card-body">
+                        <div id="chartRetiradaUnidade" style="width: 800px; height: 600px;"></div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -228,12 +220,97 @@
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
 
-    });
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['line']});
+    google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Dia');
+    data.addColumn('number', 'Retiradas');
+    var chartRetirada = JSON.parse('<%-JSON.stringify(chartRetirada)%>');
+    let bkp = chartRetirada;
+    chartRetirada = [];
+    for(let i = 0; i < bkp.length; i++){
+      chartRetirada.push([moment(bkp[i].labels).format("DD/MM"), bkp[i].series]);
+    }
+    data.addRows(chartRetirada);
+    var options = {
+      height: 300,
+      legend: { position: 'none' },
+      axes: {
+        x: {
+          0: {side: 'top'}
+        }
+      }
+    };
+
+    var chart = new google.charts.Line(document.getElementById('chartRetirada'));
+
+    chart.draw(data, google.charts.Line.convertOptions(options));
+  }
+  </script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff() {
+      var chartRetiradaQuilograma = JSON.parse('<%-JSON.stringify(chartRetiradaQuilograma)%>');
+      let bkp = chartRetiradaQuilograma;
+      chartRetiradaQuilograma = [["Produto","Quantidade(KG)"]];
+      for(let i = 0; i < bkp.length; i++){
+        chartRetiradaQuilograma.push([bkp[i].labels, bkp[i].series]);
+      }
+      console.log(chartRetiradaQuilograma);
+      var data = new google.visualization.arrayToDataTable(chartRetiradaQuilograma);
+
+      var options = {
+        width: '450',
+        legend: { position: 'none' },
+        axes: {
+          x: {
+            0: { side: 'bottom', label: 'Produtos'} // Top x-axis.
+          }
+        },
+        bar: { groupWidth: "10%" },
+        isStacked: true
+      };
+      var chart = new google.charts.Bar(document.getElementById('chartRetiradaQuilograma'));
+      // Convert the Classic options to Material options.
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    };
+  </script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff() {
+      var chartRetiradaUnidade = JSON.parse('<%-JSON.stringify(chartRetiradaUnidade)%>');
+      let bkp = chartRetiradaUnidade;
+      chartRetiradaUnidade = [["Produto","Quantidade(KG)"]];
+      for(let i = 0; i < bkp.length; i++){
+        chartRetiradaUnidade.push([bkp[i].labels, bkp[i].series]);
+      }
+      var data = new google.visualization.arrayToDataTable(chartRetiradaUnidade);
+
+      var options = {
+        width: '450',
+        legend: { position: 'none' },
+        axes: {
+          x: {
+            0: { side: 'bottom', label: 'Produtos'} // Top x-axis.
+          }
+        },
+        bar: { groupWidth: "10%" },
+        isStacked: true
+      };
+      var chart = new google.charts.Bar(document.getElementById('chartRetiradaUnidade'));
+      // Convert the Classic options to Material options.
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    };
   </script>
 </body>
 
