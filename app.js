@@ -8,7 +8,6 @@ const flash = require('connect-flash');
 const md5 = require('md5');
 const app = express();
 
-
 const {
     getLoginPage
 } = require('./routes/index');
@@ -45,7 +44,9 @@ const {
     createProduct,
     deleteProduct,
     editProductPage,
-    editProduct
+    editProduct,
+    withdrawProduct,
+    insertProduct
 } = require('./routes/product');
 
 const port = 3000;
@@ -55,7 +56,7 @@ const port = 3000;
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'almezi2631970',
     database: 'db_john'
 });
 
@@ -128,9 +129,8 @@ app.post('/produto/novo', createProduct);
 app.get('/editar/produto/:id', editProductPage);
 app.post('/editar/produto/:id', editProduct);
 app.get('/deletar/produto/:id', deleteProduct);
-
-
-
+app.post('/retirar/produto', withdrawProduct);
+app.post('/inserir/produto', insertProduct);
 
 // set the app to listen on the port
 app.listen(port, () => {

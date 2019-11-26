@@ -87,5 +87,63 @@ module.exports = {
             await productDao.deleteProduct(id);
             res.send('Produto deletado com sucesso!');
         }
+    },
+    withdrawProduct: async (req, res) => {
+        let id = req.body.id_produto;
+        let qty = req.body.qty;
+        let product = await productDao.getProductByid(id) || undefined;
+        if(qty > 0 && product != undefined && req.session.loggedin && product[0].qty >= qty){
+            await productDao.withdrawProduct(id, qty);
+            req.session.success_msg = {
+                success_msg: "Quantidade retirada com sucesso!"
+            }
+            res.redirect('/painel');
+        } else if (qty > 0 && product != undefined && req.session.loggedin && product[0].qty < qty){
+            //erro não tem produto suficiente
+            req.session.error_msg = {
+                error_msg: "Quantidade de produto insuficiente."
+            }
+            res.redirect('/painel');
+        } else if (qty > 0 && product == undefined && req.session.loggedin){
+            //erro produto não existe
+            req.session.error_msg = {
+                error_msg: "Produto inexistente."
+            }
+            res.redirect('/painel');
+        }else if(qty < 0 && req.session.loggedin){
+            req.session.error_msg = {
+                error_msg: "Quantidade invalida."
+            }
+            res.redirect('/painel');
+        } else if (!req.session.loggedin){
+            //erro não está logado
+            res.redirect('/');
+        }
+    },
+    insertProduct: async (req, res) => {
+        let id = req.body.id_produto;
+        let qty = req.body.qty;
+        let product = await productDao.getProductByid(id) || undefined;
+        if(qty > 0 && product != undefined && req.session.loggedin){
+            await productDao.insertProduct(id, qty);
+            req.session.success_msg = {
+                success_msg: "Quantidade adicionada com sucesso!"
+            }
+            res.redirect('/painel');
+        }else if (qty > 0 && product == undefined && req.session.loggedin){
+            //erro produto não existe
+            req.session.error_msg = {
+                error_msg: "Produto inexistente."
+            }
+            res.redirect('/painel');
+        }else if(qty < 0 && req.session.loggedin){
+            req.session.error_msg = {
+                error_msg: "Quantidade invalida."
+            }
+            res.redirect('/painel');
+        } else if (!req.session.loggedin){
+            //erro não está logado
+            res.redirect('/');
+        }
     }
 }
